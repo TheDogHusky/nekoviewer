@@ -91,6 +91,12 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    transition: outline-offset 0.05s ease;
+}
+
+*:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 0.25rem;
 }
 
 body {
@@ -103,6 +109,47 @@ body {
 
 section {
     max-width: 100%;
+}
+
+header {
+    transform: translateY(0);
+    transition: transform 0.3s;
+    position: relative;
+}
+
+header > .open {
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0.5rem;
+    z-index: 1000;
+    padding: 1rem;
+    cursor: pointer;
+    color: var(--primary-200);
+    background-color: var(--black-dark);
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 0.25rem;
+    transition: opacity 0.3s, visibility 0.3s, color 0.3s, background-color 0.3s;
+}
+
+header > .open:hover {
+    color: var(--primary-500);
+    background-color: var(--black-sightly-dark);
+}
+
+header.hidden {
+    transform: translateY(-100%);
+}
+
+header.hidden > .open {
+    opacity: 1;
+    visibility: visible;
 }
 
 .container {
@@ -703,4 +750,20 @@ footer > * + *::before {
 .settings-pane .close:hover {
     color: var(--primary-500);
     background-color: var(--black-sightly-dark);
+}
+
+/* floating-vue */
+
+.v-popper--theme-tooltip .v-popper__inner {
+    background: var(--black-darker);
+    color: var(--text-color);
+}
+
+.dark .v-popper--theme-tooltip .v-popper__inner {
+    background: var(--black-darker);
+    color: var(--text-color);
+}
+
+.dark .v-popper--theme-tooltip .v-popper__arrow-outer {
+    border-color: var(--text-color);
 }
