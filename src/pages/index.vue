@@ -5,6 +5,59 @@ const infos: Ref<{
 } | null> | undefined = inject('infos');
 
 console.log(infos?.value);
+
+const sampleMangas = [
+    {
+        name: "Tsugumomo",
+        image: "/manga.jpe",
+        link: "/manga/tsugumomo"
+    },
+    {
+        name: "Tsugumomo",
+        image: "/manga.jpe",
+        link: "/manga/tsugumomo"
+    },
+    {
+        name: "Tsugumomo",
+        image: "/manga.jpe",
+        link: "/manga/tsugumomo"
+    },
+    {
+        name: "Tsugumomo",
+        image: "/manga.jpe",
+        link: "/manga/tsugumomo"
+    },
+    {
+        name: "Tsugumomo",
+        image: "/manga.jpe",
+        link: "/manga/tsugumomo"
+    },
+    {
+        name: "Tsugumomo",
+        image: "/manga.jpe",
+        link: "/manga/tsugumomo"
+    },
+    {
+        name: "Tsugumomo",
+        image: "/manga.jpe",
+        link: "/manga/tsugumomo"
+    },
+    {
+        name: "Tsugumomo",
+        image: "/manga.jpe",
+        link: "/manga/tsugumomo"
+    },
+    {
+        name: "Tsugumomo",
+        image: "/manga.jpe",
+        link: "/manga/tsugumomo"
+    },
+    {
+        name: "Tsugumomo",
+        image: "/manga.jpe",
+        link: "/manga/tsugumomo"
+    }
+]
 </script>
 
 <template>
@@ -13,30 +66,10 @@ console.log(infos?.value);
         <section>
             <h2 class="px-3">Recent</h2>
             <div class="library-container">
-                <div class="manga">
-                    <img src="/manga.jpe" alt="Manga" />
-                    <h3>One Piece</h3>
-                    <NuxtLink to="/manga/one-piece">Resume</NuxtLink>
-                </div>
-                <div class="manga">
-                    <img src="/manga.jpe" alt="Manga" />
-                    <h3>One Piece</h3>
-                    <NuxtLink to="/manga/one-piece">Resume</NuxtLink>
-                </div>
-                <div class="manga">
-                    <img src="/manga.jpe" alt="Manga" />
-                    <h3>One Piece</h3>
-                    <NuxtLink to="/manga/one-piece">Resume</NuxtLink>
-                </div>
-                <div class="manga">
-                    <img src="/manga.jpe" alt="Manga" />
-                    <h3>One Piece</h3>
-                    <NuxtLink to="/manga/one-piece">Resume</NuxtLink>
-                </div>
-                <div class="manga">
-                    <img src="/manga.jpe" alt="Manga" />
-                    <h3>One Piece</h3>
-                    <NuxtLink to="/manga/one-piece">Resume</NuxtLink>
+                <div class="manga" v-for="manga in sampleMangas" :key="sampleMangas.indexOf(manga)">
+                    <img :src="manga.image" alt="Manga" />
+                    <h3>{{ manga.name }}</h3>
+                    <NuxtLink class="manga-btn" :to="manga.link">Resume</NuxtLink>
                 </div>
             </div>
         </section>

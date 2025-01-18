@@ -1,5 +1,7 @@
 <script setup lang="ts">
+const settingsPaneActive = useState('settingsPaneActive');
 
+function t
 </script>
 
 <template>
@@ -17,7 +19,7 @@
                 <span></span>
             </div>
             <div class="nav-menu">
-                <div class="nav-menu-right">
+                <div class="nav-menu-left">
                     <ul class="nav-items">
                         <li class="nav-item">
                             <NuxtLink to="/">Home</NuxtLink>
@@ -30,9 +32,9 @@
                         </li>
                     </ul>
                 </div>
-                <div class="nav-menu-left">
+                <div class="nav-menu-right">
                     <ul class="nav-items">
-                        <li class="nav-item">
+                        <li class="nav-item icon">
                             <NuxtLink to="/settings"><Icon name="nf-oct-gear" /></NuxtLink>
                         </li>
                     </ul>

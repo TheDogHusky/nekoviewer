@@ -19,6 +19,7 @@ function createWindow() {
         },
         width: 1224,
         height: 768,
+        icon: path.join(__dirname, '..', 'src', "public", "favicon.ico")
     });
 
     if (process.env.VITE_DEV_SERVER_URL) {

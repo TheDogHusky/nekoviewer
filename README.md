@@ -1,8 +1,24 @@
-# Nuxt Minimal Starter
+# NekoViewer
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Yet another manga reader, built with Nuxt3 and Electron.
+
+## Features
+
+- [ ] Read PDF files
+- [ ] Library 
+- [ ] Multiple reading modes
+- [ ] Epub and CBR
+
+## Motivation
+
+I was tired of the hundred of readers on windows that just doesn't support PDF, or supports it badly, and doesn't follow my preferred way of reading manga (no animation, just page change, because of my stability issues).
+
+So then I thought of something: what if, for fun, I made a cross-platform and cross-device manga reader, so nobody ever has to synchronize their data through a ton of websites and apps? NekoViewer was born.
 
 ## Setup
+
+Please use the installer for your operating system in the releases.
+Otherwise,
 
 Make sure to install dependencies:
 
@@ -20,9 +36,9 @@ yarn install
 bun install
 ```
 
-## Development Server
+## Development
 
-Start the development server on `http://localhost:3000`:
+Start the app on development:
 
 ```bash
 # npm
@@ -37,39 +53,3 @@ yarn dev
 # bun
 bun run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
