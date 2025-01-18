@@ -4,6 +4,6 @@
 
 <template>
     <main class="container">
-        <h1>Library</h1>
+        <h1 class="px-3">Library</h1>
     </main>
 </template>

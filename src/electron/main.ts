@@ -1,5 +1,6 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import {app, BrowserWindow, ipcMain} from 'electron';
 import path from 'node:path';
+import {readdir, readFile} from 'node:fs/promises';
 
 process.env.APP_ROOT = path.join(__dirname, '..');
 
@@ -37,6 +38,14 @@ function initIpc() {
             version: app.getVersion(),
             platform: process.platform,
         }
+    });
+
+    ipcMain.handle('getMangaFiles', async (event, manga: string) => {
+        const files = await readdir(path.join(__dirname, "..", "src", 'public', manga)).catch(() => []);
+        const coverImage = files.find(file => file.endsWith('.jpg') || file.endsWith('.png')) || '';
+        const coverImagePath = `/${manga}/${coverImage}`;
+        const data = await readFile(path.join(__dirname, "..", "src", 'public', manga, 'data.json'), 'utf-8').catch(() => '{}');
+        return { files, coverImagePath, data: JSON.parse(data) };
     });
 }
 
