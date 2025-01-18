@@ -8,6 +8,8 @@ Yet another manga reader, built with Nuxt3 and Electron.
 - [ ] Library 
 - [ ] Multiple reading modes
 - [ ] Epub and CBR
+- [ ] Cross-platform
+- [ ] Cross-device
 
 ## Motivation
 

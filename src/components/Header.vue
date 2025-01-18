@@ -12,7 +12,7 @@ function toggleHeader() {
 
 const classes = computed(() => {
     return {
-        'hidden': !headerHidden.value
+        'hidden': headerHidden.value
     };
 })
 </script>
@@ -49,10 +49,22 @@ const classes = computed(() => {
                 <div class="nav-menu-right">
                     <ul class="nav-items">
                         <li class="nav-item">
-                            <button class="nav-item icon" @click="toggleHeader"><Icon name="nf-md-arrow_up" /></button>
+                            <VTooltip>
+                                <button class="nav-item icon" @click="toggleHeader"><Icon name="nf-md-arrow_up" /></button>
+
+                                <template #popper>
+                                    Hide
+                                </template>
+                            </VTooltip>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-item icon" @click="toggleSettingsPane"><Icon name="nf-oct-gear" /></button>
+                            <VTooltip>
+                                <button class="nav-item icon" @click="toggleSettingsPane"><Icon name="nf-oct-gear" /></button>
+
+                                <template #popper>
+                                    Settings
+                                </template>
+                            </VTooltip>
                         </li>
                     </ul>
                 </div>

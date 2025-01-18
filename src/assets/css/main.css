@@ -117,7 +117,7 @@ header {
     position: relative;
 }
 
-header > .open {
+header .open {
     opacity: 0;
     visibility: hidden;
     display: flex;
@@ -138,7 +138,7 @@ header > .open {
     transition: opacity 0.3s, visibility 0.3s, color 0.3s, background-color 0.3s;
 }
 
-header > .open:hover {
+header .open:hover {
     color: var(--primary-500);
     background-color: var(--black-sightly-dark);
 }
@@ -147,7 +147,20 @@ header.hidden {
     transform: translateY(-100%);
 }
 
-header.hidden > .open {
+@keyframes hideNav {
+    0% {
+        display: flex;
+    }
+    100% {
+        display: none;
+    }
+}
+
+header.hidden nav {
+    animation: hideNav 0.3s forwards;
+}
+
+header.hidden .open {
     opacity: 1;
     visibility: visible;
 }
@@ -755,15 +768,15 @@ footer > * + *::before {
 /* floating-vue */
 
 .v-popper--theme-tooltip .v-popper__inner {
-    background: var(--black-darker);
-    color: var(--text-color);
+    background: var(--black-darker) !important;
+    color: var(--text-color) !important;
 }
 
 .dark .v-popper--theme-tooltip .v-popper__inner {
-    background: var(--black-darker);
-    color: var(--text-color);
+    background: var(--black-darker) !important;
+    color: var(--text-color) !important;
 }
 
 .dark .v-popper--theme-tooltip .v-popper__arrow-outer {
-    border-color: var(--text-color);
+    border-color: var(--text-color) !important;
 }
