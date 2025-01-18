@@ -1,7 +1,9 @@
 <script setup lang="ts">
 const settingsPaneActive = useState('settingsPaneActive');
 
-function t
+function toggleSettingsPane() {
+    settingsPaneActive.value = !settingsPaneActive.value;
+}
 </script>
 
 <template>
@@ -34,8 +36,8 @@ function t
                 </div>
                 <div class="nav-menu-right">
                     <ul class="nav-items">
-                        <li class="nav-item icon">
-                            <NuxtLink to="/settings"><Icon name="nf-oct-gear" /></NuxtLink>
+                        <li class="nav-item">
+                            <button class="nav-item icon" @click="toggleSettingsPane"><Icon name="nf-oct-gear" /></button>
                         </li>
                     </ul>
                 </div>
