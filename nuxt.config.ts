@@ -20,5 +20,12 @@ export default defineNuxtConfig({
         ],
         renderer: {},
     },
+    app: {
+        head: {
+            meta: [
+                { "http-equiv": "Content-Security-Policy", content: "script-src 'self' 'unsafe-inline'" },
+            ]
+        }
+    },
     ssr: false,
 })
