@@ -4,8 +4,6 @@ const infos: Ref<{
     platform: string;
 } | null> | undefined = inject('infos');
 
-console.log(infos?.value);
-
 const sampleMangas = [
     {
         name: "Tsugumomo",
