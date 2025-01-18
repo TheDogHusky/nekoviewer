@@ -12,16 +12,72 @@
     --primary-900: #783024;
     --primary-950: #41160e;
     --secondary: #6c757d;
+    --secondary-50: #f5f6f6;
+    --secondary-100: #e5e7e8;
+    --secondary-200: #cdd1d4;
+    --secondary-300: #aab0b6;
+    --secondary-400: #808990;
+    --secondary-500: #6c757d;
+    --secondary-600: #565c64;
+    --secondary-700: #4a4f54;
+    --secondary-800: #414449;
+    --secondary-900: #3a3c3f;
+    --secondary-950: #242628;
     --success: #28a745;
+    --success-50: #f1fcf2;
+    --success-100: #dff9e4;
+    --success-200: #c1f1cb;
+    --success-300: #90e5a3;
+    --success-400: #58d073;
+    --success-500: #32b550;
+    --success-600: #28a745;
+    --success-700: #1f7634;
+    --success-800: #1e5d2d;
+    --success-900: #1a4d27;
+    --success-950: #092a12;
     --danger: #dc3545;
+    --danger-50: #fef2f2;
+    --danger-100: #fee6e5;
+    --danger-200: #fccfcf;
+    --danger-300: #f9a8a8;
+    --danger-400: #f57779;
+    --danger-500: #ec474f;
+    --danger-600: #dc3545;
+    --danger-700: #b7192c;
+    --danger-800: #99182c;
+    --danger-900: #83182c;
+    --danger-950: #490812;
     --warning: #ffc107;
+    --warning-50: #ffffea;
+    --warning-100: #fffbc5;
+    --warning-200: #fff885;
+    --warning-300: #ffee46;
+    --warning-400: #ffdf1b;
+    --warning-500: #ffc107;
+    --warning-600: #e29400;
+    --warning-700: #bb6902;
+    --warning-800: #985108;
+    --warning-900: #7c420b;
+    --warning-950: #482200;
     --info: #17a2b8;
+    --info-50: #eefcfd;
+    --info-100: #d3f7fa;
+    --info-200: #adeef4;
+    --info-300: #74dfec;
+    --info-400: #34c8dc;
+    --info-500: #17a2b8;
+    --info-600: #1789a3;
+    --info-700: #196e85;
+    --info-800: #1d5b6d;
+    --info-900: #1d4c5c;
+    --info-950: #0d313f;
     --light: #f8f9fa;
     --dark: #343a40;
 
     --white: #ccc;
     --black-darker: #111;
     --black-dark: #222;
+    --black-sightly-dark: #303030;
     --black: #333;
     --black-light: #555;
     --black-lighter: #777;
@@ -45,6 +101,10 @@ body {
     background-color: var(--bg-color);
 }
 
+section {
+    max-width: 100%;
+}
+
 .container {
     display: flex;
     justify-content: flex-start;
@@ -62,6 +122,96 @@ body {
 h1 {
     font-size: 2rem;
     margin-bottom: 1rem;
+}
+
+::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-500);
+}
+
+/* Buttons */
+::-webkit-scrollbar-button:single-button {
+    background-color: transparent;
+    display: block;
+    background-size: 10px;
+    background-repeat: no-repeat;
+}
+
+/* Up */
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+    height: 12px;
+    width: 10px;
+    background-position: center 4px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='50,00 0,50 100,50'/></svg>");
+}
+
+::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='50,00 0,50 100,50'/></svg>");
+}
+
+::-webkit-scrollbar-button:single-button:vertical:decrement:active {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='50,00 0,50 100,50'/></svg>");
+}
+
+/* Down */
+::-webkit-scrollbar-button:single-button:vertical:increment {
+    height: 8px;
+    width: 10px;
+    background-position: center 2px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,0 100,0 50,50'/></svg>");
+}
+
+::-webkit-scrollbar-button:single-button:vertical:increment:hover {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,0 100,0 50,50'/></svg>");
+}
+
+::-webkit-scrollbar-button:single-button:vertical:increment:active {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,0 100,0 50,50'/></svg>");
+}
+
+/* Left */
+::-webkit-scrollbar-button:single-button:horizontal:decrement {
+    height: 10px;
+    width: 12px;
+    background-position: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,50 50,100 50,0'/></svg>");
+}
+
+::-webkit-scrollbar-button:single-button:horizontal:decrement:hover {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,50 50,100 50,0'/></svg>");
+}
+
+::-webkit-scrollbar-button:single-button:horizontal:decrement:active {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,50 50,100 50,0'/></svg>");
+}
+
+/* Right */
+::-webkit-scrollbar-button:single-button:horizontal:increment {
+    height: 10px;
+    width: 12px;
+    background-position: 6px 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,0 0,100 50,50'/></svg>");
+}
+
+::-webkit-scrollbar-button:single-button:horizontal:increment:hover {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,0 0,100 50,50'/></svg>");
+}
+
+::-webkit-scrollbar-button:single-button:horizontal:increment:active {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,0 0,100 50,50'/></svg>");
 }
 
 /* Utilities */
@@ -209,12 +359,20 @@ h1 {
 .library-container {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
     overflow-x: auto;
     overflow-y: hidden;
     position: relative;
     padding: 1rem;
-    max-width: 100%;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.manga:last-child {
+    margin-right: auto;
+}
+
+.manga:first-child {
+    margin-left: auto;
 }
 
 .manga {
@@ -222,6 +380,7 @@ h1 {
     flex-direction: column;
     gap: 0.5rem;
     padding: 1rem;
+    margin: 0 .5rem;
     background-color: var(--black-dark);
     border-radius: 0.5rem;
     color: var(--text-color);
@@ -245,13 +404,34 @@ h1 {
     margin: 0;
 }
 
+.manga-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: .25rem 0;
+    margin: 0;
+    border: none;
+    text-decoration: none;
+    color: var(--primary-200);
+    background-color: var(--black);
+    border-radius: 0.25rem;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.manga-btn:hover {
+    color: var(--primary-500);
+    background-color: var(--black-sightly-dark);
+}
+
 /* Header */
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 0;
     background-color: var(--black-dark);
     color: var(--text-color);
     gap: 1rem;
@@ -277,6 +457,10 @@ nav a:hover {
     justify-content: space-between;
 }
 
+.nav-menu-left {
+    padding: 1rem 0;
+}
+
 .nav-items {
     display: flex;
     gap: 1rem;
@@ -289,6 +473,7 @@ nav a:hover {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    padding: 1rem;
     color: var(--text-color);
     transition: color 0.3s, transform 0.3s;
 }
@@ -305,6 +490,16 @@ nav a:hover {
 .nav-brand h1 {
     font-size: 1.5rem;
     margin: 0;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-item.icon {
+    padding: 1rem;
 }
 
 /* Footer */
@@ -335,4 +530,112 @@ footer > * + *::before {
     transform: translateY(-50%);
     background-color: var(--text-color);
     position: absolute;
+}
+
+/* Buttons */
+
+.btn {
+    --btn-color: var(--text-color);
+    --btn-bg: var(--primary-500);
+    --btn-hover-color: var(--text-color);
+    --btn-hover-bg: var(--primary-700);
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    border: none;
+    border-radius: 0.5rem;
+    padding: .5rem 1rem;
+    text-decoration: none;
+    color: var(--btn-color);
+    cursor: pointer;
+    background-color: var(--btn-bg);
+    font-size: 1.15rem;
+    font-weight: 600;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s, outline-offset 0.05s ease;
+}
+
+.btn:hover {
+    color: var(--btn-hover-color);
+    background-color: var(--btn-hover-bg);
+}
+
+.btn:active, .btn:focus {
+    outline: 2px solid var(--btn-bg);
+    outline-offset: 0.25rem;
+}
+
+.btn-primary {
+    --btn-color: var(--text-color);
+    --btn-bg: var(--primary-500);
+    --btn-hover-color: var(--text-color);
+    --btn-hover-bg: var(--primary-600);
+}
+
+.btn-secondary {
+    --btn-color: var(--text-color);
+    --btn-bg: var(--secondary-500);
+    --btn-hover-color: var(--text-color);
+    --btn-hover-bg: var(--secondary-600);
+}
+
+.btn-success {
+    --btn-color: var(--text-color);
+    --btn-bg: var(--success-500);
+    --btn-hover-color: var(--text-color);
+    --btn-hover-bg: var(--success-600);
+}
+
+.btn-info {
+    --btn-color: var(--text-color);
+    --btn-bg: var(--info-500);
+    --btn-hover-color: var(--text-color);
+    --btn-hover-bg: var(--info-600);
+}
+
+.btn-danger {
+    --btn-color: var(--text-color);
+    --btn-bg: var(--danger-500);
+    --btn-hover-color: var(--text-color);
+    --btn-hover-bg: var(--danger-600);
+}
+
+.btn-warning {
+    --btn-color: var(--black);
+    --btn-bg: var(--warning-500);
+    --btn-hover-color: var(--black);
+    --btn-hover-bg: var(--warning-600);
+}
+
+/* Error page */
+
+.container.error {
+    font-size: 2rem;
+    gap: 0;
+    text-align: center;
+}
+
+.error h1 {
+    font-size: 2.75rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.error .btn {
+    margin-top: 1rem;
+}
+
+.error .special {
+    color: var(--danger)
+}
+
+.error .oops {
+    font-weight: 700;
+}
+
+.error p {
+    font-weight: 400;
+
 }
