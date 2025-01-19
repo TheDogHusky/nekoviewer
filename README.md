@@ -20,22 +20,12 @@ So then I thought of something: what if, for fun, I made a cross-platform and cr
 ## Setup
 
 Please use the installer for your operating system in the releases.
-Otherwise,
+Otherwise you'll need Node.js v20 or never, alongside Yarn.
 
 Make sure to install dependencies:
 
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
 yarn install
-
-# bun
-bun install
 ```
 
 ## Development
@@ -43,15 +33,5 @@ bun install
 Start the app on development:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
 yarn dev
-
-# bun
-bun run dev
 ```
