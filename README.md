@@ -11,6 +11,8 @@ Yet another manga reader, built with Nuxt3 and Electron.
 - [ ] Cross-platform
 - [ ] Cross-device
 
+You can have a list of upcoming features or work in the [TODO.md](TODO.md) file.
+
 ## Motivation
 
 I was tired of the hundred of readers on windows that just doesn't support PDF, or supports it badly, and doesn't follow my preferred way of reading manga (no animation, just page change, because of my stability issues).
