@@ -27,11 +27,17 @@ fetchMangaFiles();
 
 <template>
     <main class="container gap-2">
-        <div class="row gap-3 strict">
-            <img class="manga-cover" :src="mangaCover" height="300px">
+        <div class="row gap-3 strict manga-infos">
+            <img class="manga-cover" :src="mangaCover" height="300px" alt="manga cover">
             <div class="column w-auto">
                 <h1 class="capitalize">{{ manga }}</h1>
                 <p>{{ mangaData?.description }}</p>
+                <h3>Genres</h3>
+                <div class="genres">
+                    <p class="genre" v-for="genre in mangaData?.genres" :key="mangaData?.genres.indexOf(genre)">{{ genre }}</p>
+                </div>
+                <h3>Author</h3>
+                <p class="author">{{ mangaData?.author }}</p>
             </div>
         </div>
         <section class="mt-2 w-100">

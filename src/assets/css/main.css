@@ -715,6 +715,38 @@ h1 {
     padding-bottom: 0;
 }
 
+.genres {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.genre, .author {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    background-color: var(--black-sightly-dark);
+    color: var(--primary-200);
+    font-size: 0.75rem;
+    width: fit-content;
+    cursor: pointer;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.manga-infos h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.manga-infos h3 {
+    margin-top: 0.5rem;
+}
+
+.genre:hover, .author:hover {
+    color: var(--primary-500);
+    background-color: var(--black-dark);
+}
+
 /* Header */
 
 nav {
