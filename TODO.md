@@ -12,6 +12,7 @@ chor- [ ] Manga reader page (/manga/:id/volume/:volume): on mobile, no top right
 - [ ] Mobile: the navbar only has icon buttons such as settings, library, and hide alongside the logo
 - [ ] Manga infos page (/manga/:id): add breakpoints so that the manga synopsis is not too large (and overflows from the div) with a "read more" text (in var(--primary-500) with underline) that expands the div to show the full synopsis (and changes into a "read less" text)
 - [ ] Make the whole thing mobile-friendly
+- [ ] Add placeholders for images and mangas loading
 
 ## Features
 
