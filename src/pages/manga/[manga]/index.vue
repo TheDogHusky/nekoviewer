@@ -1,28 +1,23 @@
 <script setup lang="ts">
 const route = useRoute();
-const manga = route.params.slug;
-const page = ref<number>(1);
-const mangaVolumes = ref<string[]>([]);
+const manga = route.params.manga;
+const mangaVolumes = ref<MangaVolume[]>([]);
 const mangaCover = ref<string>('');
-const mangaData = ref<any>(null);
+const mangaData = ref<MangaData | null>(null);
 
 function extractNumberFromFilename(filename: string): string | null {
     const match = filename.match(/\d+(\.\d+)?/);
     return match ? match[0] : null;
 }
 
-async function fetchMangaFiles() {
-    const data = await window.ipcRenderer.invoke('getMangaFiles', manga);
-    mangaVolumes.value = data.files.filter((file: string) => file.endsWith('.pdf')).map((file: string) => {
-        return extractNumberFromFilename(file) || 0;
-    }).sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
-    mangaCover.value = data.coverImagePath;
-    mangaData.value = data.data;
+const data = await window.ipcRenderer.invoke('getMangaFiles', manga);
+mangaVolumes.value = data.files.filter((file: string) => file.endsWith('.pdf')).map((file: string) => {
+    return extractNumberFromFilename(file) || 0;
+}).sort((a: string, b: string) => parseFloat(a) - parseFloat(b));
+mangaCover.value = data.coverImagePath;
+mangaData.value = data.data;
 
-    console.log(mangaData.value);
-}
-
-fetchMangaFiles();
+console.log(mangaData.value);
 </script>
 
 <template>
@@ -43,9 +38,9 @@ fetchMangaFiles();
         <section class="mt-2 w-100">
             <h2>Volumes</h2>
             <div class="volumes-list">
-                <div class="manga-volume" v-for="volume in mangaVolumes" :key="mangaVolumes.indexOf(volume)">
+                <div class="manga-volume" v-for="volume in mangaVolumes" :key="volume.number">
                     <p>Volume {{ volume }}</p>
-                    <NuxtLink class="btn btn-secondary btn-small" :to="`/manga/${manga}/${volume}`">Read</NuxtLink>
+                    <NuxtLink class="btn btn-secondary btn-small" :to="`/manga/${manga}/volume/${volume.number}`">Read</NuxtLink>
                 </div>
             </div>
         </section>
