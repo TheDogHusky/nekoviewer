@@ -8,7 +8,7 @@ So I don't forget anything.
 
 - [ ] Settings pane: navigation to settings categories on sidebar
 - [ ] Settings pane: sidebar becomes an off-canvas menu on mobile, with a top left arrow left button open it, followed by the category title, and the close button on the right
-- [ ] Manga reader page (/manga/:id/volume/:volume/page/:page): on mobile, no top right button to open the navbar, but touching the middle of the screen will show it alongside the progression of the reading, and a few controls such as go back, previous page, go to page, next page, go forward, and close the reader
+chor- [ ] Manga reader page (/manga/:id/volume/:volume): on mobile, no top right button to open the navbar, but touching the middle of the screen will show it alongside the progression of the reading, and a few controls such as go back, previous page, go to page, next page, go forward, and close the reader
 - [ ] Mobile: the navbar only has icon buttons such as settings, library, and hide alongside the logo
 - [ ] Manga infos page (/manga/:id): add breakpoints so that the manga synopsis is not too large (and overflows from the div) with a "read more" text (in var(--primary-500) with underline) that expands the div to show the full synopsis (and changes into a "read less" text)
 - [ ] Make the whole thing mobile-friendly
