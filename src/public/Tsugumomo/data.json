@@ -6,5 +6,6 @@
         "Action",
         "Comedy",
         "Romance"
-    ]
+    ],
+    "cover": "./cover.jpg"
 }
