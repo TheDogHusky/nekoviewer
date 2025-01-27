@@ -1,5 +1,7 @@
 dist-electron
 
+src/public/**/*.pdf
+
 # Nuxt dev/build outputs
 .output
 .data
