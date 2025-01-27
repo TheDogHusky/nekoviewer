@@ -7,52 +7,52 @@ const infos: Ref<{
 const sampleMangas = [
     {
         name: "Tsugumomo",
-        image: "/manga.jpe",
+        image: "/tsugumomo/cover.jpg",
         link: "/manga/tsugumomo"
     },
     {
         name: "Tsugumomo",
-        image: "/manga.jpe",
+        image: "/tsugumomo/cover.jpg",
         link: "/manga/tsugumomo"
     },
     {
         name: "Tsugumomo",
-        image: "/manga.jpe",
+        image: "/tsugumomo/cover.jpg",
         link: "/manga/tsugumomo"
     },
     {
         name: "Tsugumomo",
-        image: "/manga.jpe",
+        image: "/tsugumomo/cover.jpg",
         link: "/manga/tsugumomo"
     },
     {
         name: "Tsugumomo",
-        image: "/manga.jpe",
+        image: "/tsugumomo/cover.jpg",
         link: "/manga/tsugumomo"
     },
     {
         name: "Tsugumomo",
-        image: "/manga.jpe",
+        image: "/tsugumomo/cover.jpg",
         link: "/manga/tsugumomo"
     },
     {
         name: "Tsugumomo",
-        image: "/manga.jpe",
+        image: "/tsugumomo/cover.jpg",
         link: "/manga/tsugumomo"
     },
     {
         name: "Tsugumomo",
-        image: "/manga.jpe",
+        image: "/tsugumomo/cover.jpg",
         link: "/manga/tsugumomo"
     },
     {
         name: "Tsugumomo",
-        image: "/manga.jpe",
+        image: "/tsugumomo/cover.jpg",
         link: "/manga/tsugumomo"
     },
     {
         name: "Tsugumomo",
-        image: "/manga.jpe",
+        image: "/tsugumomo/cover.jpg",
         link: "/manga/tsugumomo"
     }
 ]
@@ -65,7 +65,7 @@ const sampleMangas = [
             <h2 class="px-3 mb-0">Recent</h2>
             <div class="library-container">
                 <div class="manga" v-for="manga in sampleMangas" :key="sampleMangas.indexOf(manga)">
-                    <img :src="manga.image" alt="Manga" />
+                    <NuxtImg :src="manga.image" placeholder width="140px" alt="Manga" />
                     <h3>{{ manga.name }}</h3>
                     <NuxtLink class="manga-btn" :to="manga.link">Resume</NuxtLink>
                 </div>
