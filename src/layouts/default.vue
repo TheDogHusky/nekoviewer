@@ -1,6 +1,9 @@
 <template>
-    <Header />
-    <slot />
-    <Footer />
-    <Settings />
+    <Titlebar />
+    <div class="content">
+        <Header />
+        <slot />
+        <Footer />
+        <Settings />
+    </div>
 </template>

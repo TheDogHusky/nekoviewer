@@ -21,12 +21,6 @@ const classes = computed(() => {
     <header :class="classes">
         <button class="open" @click="toggleHeader"><Icon name="nf-md-arrow_down" /></button>
         <nav>
-            <div class="nav-brand">
-                <NuxtLink to="/">
-                    <img src="/logo.png" alt="Logo" />
-                    <h1><span class="neko">Neko</span>Viewer</h1>
-                </NuxtLink>
-            </div>
             <div class="open-menu">
                 <span></span>
                 <span></span>

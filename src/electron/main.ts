@@ -13,6 +13,11 @@ process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL
 
 let win: BrowserWindow | null;
 
+function extractNumberFromFilename(filename: string): string | null {
+    const match = filename.match(/\d+(\.\d+)?/);
+    return match ? match[0] : null;
+}
+
 function createWindow() {
     win = new BrowserWindow({
         webPreferences: {
@@ -21,7 +26,8 @@ function createWindow() {
         width: 1224,
         height: 768,
         icon: path.join(__dirname, '..', 'src', "public", "favicon.ico"),
-        autoHideMenuBar: true
+        autoHideMenuBar: true,
+        titleBarStyle: 'hidden'
     });
 
     if (process.env.VITE_DEV_SERVER_URL) {
@@ -40,12 +46,35 @@ function initIpc() {
         }
     });
 
-    ipcMain.handle('getMangaFiles', async (event, manga: string) => {
+    ipcMain.handle('getMangaData', async (event, manga: string) => {
         const files = await readdir(path.join(__dirname, "..", "src", 'public', manga)).catch(() => []);
         const coverImage = files.find(file => file.endsWith('.jpg') || file.endsWith('.png')) || '';
         const coverImagePath = `/${manga}/${coverImage}`;
         const data = await readFile(path.join(__dirname, "..", "src", 'public', manga, 'data.json'), 'utf-8').catch(() => '{}');
-        return { files, coverImagePath, data: JSON.parse(data) };
+        const volumes = files.filter((file: string) => file.endsWith('.pdf')).map((file: string) => {
+            return extractNumberFromFilename(file) || 0;
+        }).sort((a, b) => parseFloat(String(a)) - parseFloat(String(b)));
+        return { files, coverImagePath, data: JSON.parse(data), volumes };
+    });
+
+    ipcMain.on("minimize", () => {
+        win?.minimize(); // Minimize the main window
+    });
+
+    ipcMain.on("maximize", () => {
+        if (win?.isMaximized()) {
+            // If the window is maximized, restore it and send an event
+            win?.unmaximize();
+            win?.webContents.send("restored-window");
+        } else {
+            // If the window is not maximized, maximize it and send an event
+            win?.maximize();
+            win?.webContents.send("maximized-window");
+        }
+    });
+
+    ipcMain.on("close", () => {
+        win?.close(); // Close the main window
     });
 }
 
