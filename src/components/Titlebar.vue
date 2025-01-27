@@ -29,7 +29,6 @@ const icon = computed(() => state.value ? 'nf-cod-chrome_restore' : 'nf-cod-chro
 <template>
     <div class="titlebar">
         <div class="titlebar-items">
-            <!-- TODO fix ipx saying wrong image format -->
             <NuxtImg src="/logo.png" format="webp" height="16" width="16" />
             <h1 class="title">NekoViewer</h1>
         </div>
