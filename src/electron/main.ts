@@ -25,6 +25,8 @@ function createWindow() {
         },
         width: 1224,
         height: 768,
+        minWidth: 400,
+        minHeight: 400,
         show: false,
         icon: path.join(__dirname, '..', 'src', "public", "favicon.ico"),
         autoHideMenuBar: true,
@@ -36,7 +38,10 @@ function createWindow() {
         height: 400,
         frame: false,
         icon: path.join(__dirname, '..', 'src', "public", "favicon.ico"),
-        alwaysOnTop: true
+        alwaysOnTop: true,
+        skipTaskbar: true,
+        resizable: false,
+        closable: false,
     });
 
     splashWindow.loadFile(path.join(__dirname, '..', 'src', 'public', 'splash.html'));
@@ -49,7 +54,6 @@ function createWindow() {
     }
 
     win.webContents.once('did-finish-load', () => {
-        console.log('Finished loading');
         splashWindow.destroy();
         win?.show();
     });
