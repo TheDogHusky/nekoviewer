@@ -25,10 +25,21 @@ function createWindow() {
         },
         width: 1224,
         height: 768,
+        show: false,
         icon: path.join(__dirname, '..', 'src', "public", "favicon.ico"),
         autoHideMenuBar: true,
         titleBarStyle: 'hidden'
     });
+
+    const splashWindow = new BrowserWindow({
+        width: 400,
+        height: 400,
+        frame: false,
+        icon: path.join(__dirname, '..', 'src', "public", "favicon.ico"),
+        alwaysOnTop: true
+    });
+
+    splashWindow.loadFile(path.join(__dirname, '..', 'src', 'public', 'splash.html'));
 
     if (process.env.VITE_DEV_SERVER_URL) {
         win.loadURL(process.env.VITE_DEV_SERVER_URL);
@@ -36,6 +47,12 @@ function createWindow() {
     } else {
         win.loadFile(path.join(process.env.VITE_PUBLIC!, 'index.html'));
     }
+
+    win.webContents.once('did-finish-load', () => {
+        console.log('Finished loading');
+        splashWindow.destroy();
+        win?.show();
+    });
 }
 
 function initIpc() {
