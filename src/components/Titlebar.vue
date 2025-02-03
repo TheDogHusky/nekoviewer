@@ -1,26 +1,39 @@
 <script setup lang="ts">
-const state = ref<boolean>(false); // is the window maximized
+const state = ref<boolean>(false);// is the window maximized
 
+/**
+ * Maximize the window
+ */
 function maximize() {
-    window.ipcRenderer.send('maximize');
+    window.ipcRenderer.send('window:maximize'); // send the maximize event to the main process
 }
 
+/**
+ * Minimize the window
+ */
 function minimize() {
-    window.ipcRenderer.send('minimize');
+    window.ipcRenderer.send('window:minimize'); // send the minimize event to the main process
 }
 
+/**
+ * Close the window
+ */
 function close() {
-    window.ipcRenderer.send('close');
+    window.ipcRenderer.send('window:close'); // send the close event to the main process
 }
 
+/**
+ * Updates the state property when the main process sent back the maximized-window event after successfully maximizing the window
+ */
 window.ipcRenderer.on('maximized-window', () => {
     state.value = true;
-    console.log('maximized');
 });
 
+/**
+ * Updates the state property when the main process sent back the restored-window event after successfully restoring the window
+ */
 window.ipcRenderer.on('restored-window', () => {
     state.value = false;
-    console.log('restored');
 });
 
 const icon = computed(() => state.value ? 'nf-cod-chrome_restore' : 'nf-cod-chrome_maximize');

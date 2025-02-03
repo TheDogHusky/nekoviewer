@@ -19,12 +19,18 @@ Things to do to make this app better, so I don't forget anything.
 - [ ] Multiple reading modes
 - [ ] Epub and CBR
 - [ ] Store user data in a local database (.db file) (framework?) (in the future will be changed to accounts on my servers to allow cross-device synchronization)
-- [ ] Figure out the "library" / "app home" folder on the computer to store imported manga and other ressources
+- [x] Figure out the "library" / "app home" folder on the computer to store imported manga and other ressources
 - [ ] Add keyboard shortcuts
 
 ## Code
 
 - [ ] Add a keyboard shortcuts composable (useKeyboardShortcuts) to handle keyboard shortcuts
 - [ ] Add a settings composable (useSettings) to store and retrieve settings from the database
-- [ ] Figure out if the logic should be handed down to electron (such as getting settings, mangas, library, importing, etc..) or if it should be handled in nuxt
+- [x] Figure out if the logic should be handed down to electron (such as getting settings, mangas, library, importing, etc..) or if it should be handled in nuxt
 - [ ] Add a database composable (useDatabase) to handle the database
+- [ ] Rename occurrences of "manga" to "book" in the codebase
+- [ ] Add a "books" collection in the database
+- [ ] Add a "settings" collection in the database
+- [ ] Add a "library" collection in the database
+- [ ] Add a "reading" collection in the database
+- [ ] Add database logic in ~/electron/structures/database.ts

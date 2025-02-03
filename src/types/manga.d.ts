@@ -1,5 +1,5 @@
 /**
- * The data structure for the manga
+ * The data structure for the book
  */
 interface MangaData {
     /**
@@ -15,15 +15,15 @@ interface MangaData {
      */
     author: string;
     /**
-     * The genres of the manga
+     * The genres of the book
      */
     genres: string[];
     /**
-     * The cover image path for the manga
+     * The cover image path for the book
      */
     cover: string;
     /**
-     * The volumes of the manga
+     * The volumes of the book
      * Could be either some data retrieved by the electron backend (saved on the database) so it's an array of MangaVolume
      * or just an array of strings with the volume names (retrieved by scanning for files)
      */
@@ -31,7 +31,7 @@ interface MangaData {
 }
 
 /**
- * The data structure for a manga volume
+ * The data structure for a book volume
  */
 interface MangaVolume {
     /**
@@ -46,4 +46,11 @@ interface MangaVolume {
      * The volume number
      */
     number: number;
+}
+
+interface MangaDataIPCAnswer {
+    files: string[];
+    coverImagePath: string;
+    data: MangaData;
+    volumes: (string | 0)[];
 }

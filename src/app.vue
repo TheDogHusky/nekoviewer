@@ -6,13 +6,10 @@
 </template>
 
 <script setup lang="ts">
-const infos: Ref<{
-    version: string;
-    platform: string;
-} | null> = ref(null);
+const infos: Ref<AppStartupInfos> = ref(null);
 
 onMounted(async () => {
-    infos.value = await window.ipcRenderer.invoke('startupInfos');
+    infos.value = await window.ipcRenderer.invoke('app:startupInfos');
 });
 
 provide('infos', infos);

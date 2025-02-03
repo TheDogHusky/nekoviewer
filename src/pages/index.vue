@@ -8,61 +8,61 @@ const sampleMangas = [
     {
         name: "Tsugumomo",
         image: "/tsugumomo/cover.jpg",
-        link: "/manga/tsugumomo"
+        link: "/book/tsugumomo"
     },
     {
         name: "Tsugumomo",
         image: "/tsugumomo/cover.jpg",
-        link: "/manga/tsugumomo"
+        link: "/book/tsugumomo"
     },
     {
         name: "Tsugumomo",
         image: "/tsugumomo/cover.jpg",
-        link: "/manga/tsugumomo"
+        link: "/book/tsugumomo"
     },
     {
         name: "Tsugumomo",
         image: "/tsugumomo/cover.jpg",
-        link: "/manga/tsugumomo"
+        link: "/book/tsugumomo"
     },
     {
         name: "Tsugumomo",
         image: "/tsugumomo/cover.jpg",
-        link: "/manga/tsugumomo"
+        link: "/book/tsugumomo"
     },
     {
         name: "Tsugumomo",
         image: "/tsugumomo/cover.jpg",
-        link: "/manga/tsugumomo"
+        link: "/book/tsugumomo"
     },
     {
         name: "Tsugumomo",
         image: "/tsugumomo/cover.jpg",
-        link: "/manga/tsugumomo"
+        link: "/book/tsugumomo"
     },
     {
         name: "Tsugumomo",
         image: "/tsugumomo/cover.jpg",
-        link: "/manga/tsugumomo"
+        link: "/book/tsugumomo"
     },
     {
         name: "Tsugumomo",
         image: "/tsugumomo/cover.jpg",
-        link: "/manga/tsugumomo"
+        link: "/book/tsugumomo"
     },
     {
         name: "Tsugumomo",
         image: "/tsugumomo/cover.jpg",
-        link: "/manga/tsugumomo"
+        link: "/book/tsugumomo"
     }
 ]
 </script>
 
 <template>
     <main class="container">
-        <h1 class="px-3">Welcome home</h1>
+        <h1 class="px-3">Welcome back! Time for a read?</h1>
         <section>
-            <h2 class="px-3 mb-0">Recent</h2>
+            <h2 class="px-3 mb-0">Recent Lectures</h2>
             <div class="library-container">
                 <div class="manga" v-for="manga in sampleMangas" :key="sampleMangas.indexOf(manga)">
                     <NuxtImg :src="manga.image" placeholder width="140px" alt="Manga" />

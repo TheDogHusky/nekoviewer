@@ -1,8 +1,5 @@
 <script setup lang="ts">
-const infos: Ref<{
-    version: string;
-    platform: string;
-} | null> | undefined = inject('infos');
+const infos: Ref<AppStartupInfos> | undefined = inject('infos');
 
 const route = useRoute();
 const path = ref<string>(route.path);
@@ -13,7 +10,7 @@ watch(route, (newRoute) => {
 
 const classes = computed(() => {
     return {
-        'hidden': path.value.startsWith('/manga/')
+        'hidden': path.value.startsWith('/book/')
     };
 });
 </script>

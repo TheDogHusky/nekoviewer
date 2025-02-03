@@ -1,3 +1,5 @@
+import path from 'node:path';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     compatibilityDate: '2024-11-01',
@@ -10,6 +12,13 @@ export default defineNuxtConfig({
         build: [
             {
                 entry: 'src/electron/main.ts',
+                vite: {
+                    resolve: {
+                        alias: {
+                            '~': path.resolve(__dirname, 'src'),
+                        }
+                    }
+                }
             },
             {
                 entry: 'src/electron/preload.ts',
@@ -25,6 +34,13 @@ export default defineNuxtConfig({
             meta: [
                 { "http-equiv": "Content-Security-Policy", content: "script-src 'self' 'unsafe-inline'" },
             ]
+        }
+    },
+    vite: {
+        resolve: {
+            alias: {
+                '~': path.resolve(__dirname, 'src'),
+            }
         }
     },
     ssr: false,
