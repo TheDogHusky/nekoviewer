@@ -1,5 +1,8 @@
 import { startupInfos } from "~/electron/events/app";
-import { getBookData } from "~/electron/events/books";
+import {
+    getBookData,
+    getRecentBooks
+} from "~/electron/events/books";
 import {
     onMinimize,
     onMaximize,
@@ -13,6 +16,10 @@ const events = {
     },
     "books:getBookData": {
         func: getBookData,
+        type: "handle"
+    },
+    "books:getRecentBooks": {
+        func: getRecentBooks,
         type: "handle"
     },
     "window:minimize": {

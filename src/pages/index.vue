@@ -4,58 +4,7 @@ const infos: Ref<{
     platform: string;
 } | null> | undefined = inject('infos');
 
-const sampleMangas = [
-    {
-        name: "Tsugumomo",
-        image: "/tsugumomo/cover.jpg",
-        link: "/book/tsugumomo"
-    },
-    {
-        name: "Tsugumomo",
-        image: "/tsugumomo/cover.jpg",
-        link: "/book/tsugumomo"
-    },
-    {
-        name: "Tsugumomo",
-        image: "/tsugumomo/cover.jpg",
-        link: "/book/tsugumomo"
-    },
-    {
-        name: "Tsugumomo",
-        image: "/tsugumomo/cover.jpg",
-        link: "/book/tsugumomo"
-    },
-    {
-        name: "Tsugumomo",
-        image: "/tsugumomo/cover.jpg",
-        link: "/book/tsugumomo"
-    },
-    {
-        name: "Tsugumomo",
-        image: "/tsugumomo/cover.jpg",
-        link: "/book/tsugumomo"
-    },
-    {
-        name: "Tsugumomo",
-        image: "/tsugumomo/cover.jpg",
-        link: "/book/tsugumomo"
-    },
-    {
-        name: "Tsugumomo",
-        image: "/tsugumomo/cover.jpg",
-        link: "/book/tsugumomo"
-    },
-    {
-        name: "Tsugumomo",
-        image: "/tsugumomo/cover.jpg",
-        link: "/book/tsugumomo"
-    },
-    {
-        name: "Tsugumomo",
-        image: "/tsugumomo/cover.jpg",
-        link: "/book/tsugumomo"
-    }
-]
+const recent: Ref<MangaData[] | null> = ref(await window.ipcRenderer.invoke('books:getRecentBooks'));
 </script>
 
 <template>
@@ -64,10 +13,14 @@ const sampleMangas = [
         <section>
             <h2 class="px-3 mb-0">Recent Lectures</h2>
             <div class="library-container">
-                <div class="manga" v-for="manga in sampleMangas" :key="sampleMangas.indexOf(manga)">
-                    <NuxtImg :src="manga.image" placeholder width="140px" alt="Manga" />
+                <div class="manga" v-if="recent" v-for="manga in recent" :key="recent.indexOf(manga)">
+                    <NuxtImg :src="manga.cover" placeholder width="140px" alt="Manga" />
                     <h3>{{ manga.name }}</h3>
-                    <NuxtLink class="manga-btn" :to="manga.link">Resume</NuxtLink>
+                    <!-- TODO make a function to clean manga name for the URL -->
+                    <NuxtLink class="manga-btn" :to="`/book/${manga.name.toLowerCase()}`">Resume</NuxtLink>
+                </div>
+                <div v-else class="no-manga">
+                    <p>Oops, seems like you don't have any recent lectures..</p>
                 </div>
             </div>
         </section>
