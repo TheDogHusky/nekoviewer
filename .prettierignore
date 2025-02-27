@@ -1,0 +1,8 @@
+package.json
+nuxt.config.ts
+README.md
+tsconfig.json
+dist-electron
+.nuxt
+.output
+.idea

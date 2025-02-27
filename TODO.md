@@ -28,9 +28,9 @@ Things to do to make this app better, so I don't forget anything.
 - [ ] Add a settings composable (useSettings) to store and retrieve settings from the database
 - [x] Figure out if the logic should be handed down to electron (such as getting settings, mangas, library, importing, etc..) or if it should be handled in nuxt
 - [ ] Add a database composable (useDatabase) to handle the database
-- [ ] Rename occurrences of "manga" to "book" in the codebase
-- [ ] Add a "books" collection in the database
+- [ ] Add a "mangas" collection in the database
 - [ ] Add a "settings" collection in the database
 - [ ] Add a "library" collection in the database
 - [ ] Add a "reading" collection in the database
 - [ ] Add database logic in ~/electron/structures/database.ts
+- [ ] Use Prisma for the database

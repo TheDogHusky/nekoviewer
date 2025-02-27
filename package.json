@@ -7,7 +7,9 @@
     "build": "nuxi build --prerender && electron-builder",
     "dev": "nuxt dev --no-fork",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@nuxt/image": "1.9.0",
@@ -21,5 +23,13 @@
     "vue": "latest",
     "vue-router": "latest"
   },
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "yarn@1.22.22",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "3.5.2"
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
+  }
 }

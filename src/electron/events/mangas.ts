@@ -3,7 +3,7 @@ import path from "node:path";
 import type { IpcMainInvokeEvent } from "electron";
 import { extractNumberFromFilename } from "~/electron/utils/functions";
 
-export async function getBookData(event: IpcMainInvokeEvent, manga: string): Promise<MangaDataIPCAnswer> {
+export async function getMangaData(event: IpcMainInvokeEvent, manga: string): Promise<MangaDataIPCAnswer> {
     const files = await readdir(path.join(__dirname, "..", "src", 'public', manga)).catch(() => []);
     const coverImage = files.find(file => file.endsWith('.jpg') || file.endsWith('.png')) || '';
     const coverImagePath = `/${manga}/${coverImage}`;
@@ -23,7 +23,7 @@ export async function getBookData(event: IpcMainInvokeEvent, manga: string): Pro
 /**
  * Get the recent lectures
  */
-export async function getRecentBooks(): Promise<MangaData[]> {
+export async function getRecentMangas(): Promise<MangaData[]> {
     // for now return sample data
     const data: MangaData[] = [];
     for (let i = 0; i < 10; i++) {

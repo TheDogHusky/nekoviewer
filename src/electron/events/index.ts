@@ -1,8 +1,8 @@
 import { startupInfos } from "~/electron/events/app";
 import {
-    getBookData,
-    getRecentBooks
-} from "~/electron/events/books";
+    getMangaData,
+    getRecentMangas
+} from "~/electron/events/mangas";
 import {
     onMinimize,
     onMaximize,
@@ -14,12 +14,12 @@ const events = {
         func: startupInfos,
         type: "handle"
     },
-    "books:getBookData": {
-        func: getBookData,
+    "mangas:getMangaData": {
+        func: getMangaData,
         type: "handle"
     },
-    "books:getRecentBooks": {
-        func: getRecentBooks,
+    "mangas:getRecentMangas": {
+        func: getRecentMangas,
         type: "handle"
     },
     "window:minimize": {
@@ -35,4 +35,5 @@ const events = {
         type: "on"
     }
 };
+
 export default events;

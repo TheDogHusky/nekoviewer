@@ -10,7 +10,7 @@ watch(route, (newRoute) => {
 
 const classes = computed(() => {
     return {
-        'hidden': path.value.startsWith('/book/')
+        'hidden': path.value.startsWith('/manga/')
     };
 });
 </script>

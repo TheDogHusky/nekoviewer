@@ -22,7 +22,7 @@ So then I thought of something: what if, for fun, I made a cross-platform and cr
 ## Setup
 
 Please use the installer for your operating system in the releases.
-Otherwise you'll need Node.js v20 or never, alongside Yarn.
+Otherwise, you'll need Node.js v20 or never, alongside Yarn.
 
 Make sure to install dependencies:
 

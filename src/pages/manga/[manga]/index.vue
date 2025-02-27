@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const route = useRoute();
-const manga = route.params.book;
+const manga = route.params.manga;
 const mangaVolumes = ref<MangaVolume[]>([]);
 const mangaCover = ref<string>('');
 const mangaData = ref<MangaData | null>(null);
 
-const data = await window.ipcRenderer.invoke('books:getBookData', manga);
+const data = await window.ipcRenderer.invoke('mangas:getMangaData', manga);
 mangaVolumes.value = data.volumes;
 mangaCover.value = data.coverImagePath;
 console.log(data)
@@ -34,10 +34,10 @@ console.log(mangaVolumes.value.map(volume => volume));
             <div class="volumes-list">
                 <div class="manga-volume" v-for="volume in mangaVolumes" v-if="mangaVolumes.length" :key="volume.number">
                     <p>Volume {{ volume }}</p>
-                    <NuxtLink class="btn btn-secondary btn-small" :to="`/book/${manga}/volume/${volume.number}`">Read</NuxtLink>
+                    <NuxtLink class="btn btn-secondary btn-small" :to="`/manga/${manga}/volume/${volume.number}`">Read</NuxtLink>
                 </div>
                 <div v-else class="manga-volume no-volume">
-                    <p>Oops, seems like you don't have any volumes of this book..</p>
+                    <p>Oops, seems like you don't have any volumes of this manga..</p>
                 </div>
             </div>
         </section>
