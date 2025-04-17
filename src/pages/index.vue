@@ -4,7 +4,7 @@ const infos: Ref<{
     platform: string;
 } | null> | undefined = inject('infos');
 
-const recent: Ref<MangaData[] | null> = ref(await window.ipcRenderer.invoke('books:getRecentBooks'));
+const recent: Ref<MangaData[] | null> = ref(await window.ipcRenderer.invoke('mangas:getRecentMangas'));
 </script>
 
 <template>
@@ -17,7 +17,7 @@ const recent: Ref<MangaData[] | null> = ref(await window.ipcRenderer.invoke('boo
                     <NuxtImg :src="manga.cover" placeholder width="140px" alt="Manga" />
                     <h3>{{ manga.name }}</h3>
                     <!-- TODO make a function to clean manga name for the URL -->
-                    <NuxtLink class="manga-btn" :to="`/book/${manga.name.toLowerCase()}`">Resume</NuxtLink>
+                    <NuxtLink class="manga-btn" :to="`/manga/${manga.name.toLowerCase()}`">Resume</NuxtLink>
                 </div>
                 <div v-else class="no-manga">
                     <p>Oops, seems like you don't have any recent lectures..</p>
