@@ -27,7 +27,7 @@ interface MangaData {
      * Could be either some data retrieved by the electron backend (saved on the database) so it's an array of MangaVolume
      * or just an array of strings with the volume names (retrieved by scanning for files)
      */
-    volumes: MangaVolume[] | string[];
+    volumes: MangaVolume[];
 }
 
 /**
