@@ -1,4 +1,5 @@
 import path from 'node:path';
+import pkg from './package.json';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -16,6 +17,14 @@ export default defineNuxtConfig({
                     resolve: {
                         alias: {
                             '~': path.resolve(__dirname, 'src'),
+                        }
+                    },
+                    build: {
+                        commonjsOptions: {
+                            dynamicRequireTargets: ["@libsql/win32-x64-msvc"]
+                        },
+                        rollupOptions: {
+                            external: ["@libsql/client", "@libsql/win32-x64-msvc"],
                         }
                     }
                 }
@@ -40,11 +49,6 @@ export default defineNuxtConfig({
         resolve: {
             alias: {
                 '~': path.resolve(__dirname, 'src'),
-            }
-        },
-        build: {
-            commonjsOptions: {
-                dynamicRequireTargets: ["@libsql/win32-x64-msvc"]
             }
         }
     },

@@ -10,7 +10,7 @@ export default class Database {
     constructor(app: App) {
         this.app = app;
         this.file = app.userDataFolder + "/data.db";
-        this.db = drizzle(this.file);
+        this.db = drizzle("file:" + this.file);
     }
 
     async initializeOnFirstStartup() {
@@ -22,7 +22,7 @@ export default class Database {
         }
 
         // Initialize the database
-        this.db = drizzle(this.file);
+        this.db = drizzle("file:" + this.file);
 
         // Run migrations
         await this.db.migrate({
