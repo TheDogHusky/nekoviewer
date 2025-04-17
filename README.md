@@ -27,10 +27,23 @@ Otherwise, you'll need Node.js v20 or never, alongside Yarn.
 Make sure to install dependencies:
 
 ```bash
-yarn install
+yarn
 ```
 
 ## Development
+
+### Database
+
+Make a local-dev.db file in the root folder. (empty) Then run
+
+```bash
+yarn migrations:generate
+yarn migrations:push
+```
+
+To create the database, and push the migrations to it.
+
+### App
 
 Start the app on development:
 
