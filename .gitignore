@@ -1,5 +1,6 @@
 dist-electron
 .husky/_
+local-dev.db
 
 src/public/**/*.pdf
 

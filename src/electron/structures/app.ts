@@ -1,6 +1,8 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
 import events from "../events";
+import fs from "node:fs";
+import Database from "./database";
 
 process.env.APP_ROOT = path.join(__dirname, "..");
 
@@ -19,8 +21,13 @@ export default class App {
     public splashWindow: BrowserWindow | null = null;
     public app: typeof app = app;
     public userDataFolder: string = app.getPath("userData");
+    public db: Database = new Database(this);
 
     constructor() {
+        this.init().catch((err) => {
+            console.error("Error initializing app:", err);
+        });
+
         app.on("window-all-closed", () => {
             if (process.platform !== "darwin") {
                 app.quit();
@@ -38,6 +45,19 @@ export default class App {
             this.initIpc();
             this.createWindow();
         });
+    }
+
+    async init() {
+        await this.checkFirstTimeStartup();
+    }
+
+    async checkFirstTimeStartup() {
+        const dbFilePath = path.join(this.userDataFolder, "data.db");
+        if (!fs.existsSync(dbFilePath)) {
+            // If the file doesn't exist, create it
+            fs.writeFileSync(dbFilePath, "");
+            await this.db.initializeOnFirstStartup();
+        }
     }
 
     /**

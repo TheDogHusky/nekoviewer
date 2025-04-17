@@ -32,5 +32,20 @@ Things to do to make this app better, so I don't forget anything.
 - [ ] Add a "settings" collection in the database
 - [ ] Add a "library" collection in the database
 - [ ] Add a "reading" collection in the database
-- [ ] Add database logic in ~/electron/structures/database.ts
-- [ ] Use Prisma for the database
+- [ ] Add database logic in ~/electron/structures/database/index.ts
+- [ ] Use Drizzle for the database
+- [ ] DB: store mangas in userData/mangas -> /mangas/:id, volumes at /manga/:id/volumes/:volume, pages at /manga/:id/volumes/:volume where volume should be number.pdf (NOTE: if a volume is 18.5, it would be named as 19.pdf, and the volume number would be 18.5)
+
+```
+userData folder
+├── data.db
+├── mangas
+│   ├── 1
+│   │   ├── cover.jpg
+│   │   ├── volumes
+│   │   │   ├── 1.pdf
+│   │   │   ├── 2.pdf
+│   │   │   ├── 3.pdf
+│   │   │   ├── 4.pdf
+│   │   │   ├── 5.pdf
+```

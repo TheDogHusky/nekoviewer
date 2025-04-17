@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
     srcDir: 'src',
     css: ['~/assets/css/main.css'],
-    modules: ['nuxt-electron', 'floating-vue/nuxt', '@nuxt/image', 'nuxt-typed-router'],
+    modules: ['nuxt-electron', 'floating-vue/nuxt', '@nuxt/image'],
     electron: {
         disableDefaultOptions: true,
         build: [
@@ -40,6 +40,11 @@ export default defineNuxtConfig({
         resolve: {
             alias: {
                 '~': path.resolve(__dirname, 'src'),
+            }
+        },
+        build: {
+            commonjsOptions: {
+                dynamicRequireTargets: ["@libsql/win32-x64-msvc"]
             }
         }
     },
