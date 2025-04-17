@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
     srcDir: 'src',
     css: ['~/assets/css/main.css'],
-    modules: ['nuxt-electron', 'floating-vue/nuxt', '@nuxt/image'],
+    modules: ['nuxt-electron', 'floating-vue/nuxt', '@nuxt/image', 'nuxt-typed-router'],
     electron: {
         disableDefaultOptions: true,
         build: [

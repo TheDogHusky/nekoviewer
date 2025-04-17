@@ -1,35 +1,36 @@
 {
-  "name": "nekoviewer",
-  "private": true,
-  "version": "0.0.1",
-  "main": "dist-electron/main.js",
-  "scripts": {
-    "build": "nuxi build --prerender && electron-builder",
-    "dev": "nuxt dev --no-fork",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "format": "prettier --write .",
-    "prepare": "husky"
-  },
-  "dependencies": {
-    "@nuxt/image": "1.9.0",
-    "electron": "^33.3.1",
-    "electron-builder": "^25.1.8",
-    "floating-vue": "^5.2.2",
-    "nuxt": "^3.15.1",
-    "nuxt-electron": "0.7.0",
-    "vite-plugin-electron": "^0.29.0",
-    "vite-plugin-electron-renderer": "^0.14.6",
-    "vue": "latest",
-    "vue-router": "latest"
-  },
-  "packageManager": "yarn@1.22.22",
-  "devDependencies": {
-    "husky": "^9.1.7",
-    "lint-staged": "^15.4.3",
-    "prettier": "3.5.2"
-  },
-  "lint-staged": {
-    "*.{js,css,md}": "prettier --write"
-  }
+    "name": "nekoviewer",
+    "private": true,
+    "version": "0.0.1",
+    "main": "dist-electron/main.js",
+    "scripts": {
+        "build": "nuxi build --prerender && electron-builder",
+        "dev": "nuxt dev --no-fork",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "format": "prettier --write .",
+        "prepare": "husky"
+    },
+    "dependencies": {
+        "@nuxt/image": "1.9.0",
+        "electron": "^33.3.1",
+        "electron-builder": "^25.1.8",
+        "floating-vue": "^5.2.2",
+        "nuxt": "^3.15.1",
+        "nuxt-electron": "0.7.0",
+        "nuxt-typed-router": "3.8.0",
+        "vite-plugin-electron": "^0.29.0",
+        "vite-plugin-electron-renderer": "^0.14.6",
+        "vue": "latest",
+        "vue-router": "latest"
+    },
+    "packageManager": "yarn@1.22.22",
+    "devDependencies": {
+        "husky": "^9.1.7",
+        "lint-staged": "^15.4.3",
+        "prettier": "3.5.2"
+    },
+    "lint-staged": {
+        "*.{js,css,md}": "prettier --write"
+    }
 }
