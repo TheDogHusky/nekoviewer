@@ -3,6 +3,8 @@ import path from "node:path";
 import events from "../events";
 import fs from "node:fs";
 import Database from "./database";
+import type { AppSettings } from "../utils/types";
+import { settingsTable } from "./database/schemas";
 
 process.env.APP_ROOT = path.join(__dirname, "..");
 
@@ -22,6 +24,7 @@ export default class App {
     public app: typeof app = app;
     public userDataFolder: string = app.getPath("userData");
     public db: Database = new Database(this);
+    public settings: AppSettings = {};
 
     constructor() {
         this.init().catch((err) => {
@@ -49,6 +52,32 @@ export default class App {
 
     async init() {
         await this.checkFirstTimeStartup();
+        await this.loadSettings();
+    }
+
+    /**
+     * Load settings from the database
+     */
+    async loadSettings() {
+        const settings = await this.db.db.select(settingsTable);
+        settings.forEach((setting) => {
+            this.settings[setting.key] = setting.value;
+        });
+        console.log("Settings loaded:", this.settings);
+    }
+
+    /**
+     * Update settings in the database
+     * @param fields The fields to update
+     */
+    async updateSettings(fields: Partial<AppSettings>) {
+        this.settings = { ...this.settings, ...fields };
+        for (const [key, value] of Object.entries(fields)) {
+            await this.db.db.insert(settingsTable).values({ key, value }).onConflictDoUpdate({
+                target: [settingsTable.key],
+                set: { value }
+            });
+        }
     }
 
     async checkFirstTimeStartup() {

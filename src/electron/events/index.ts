@@ -1,4 +1,7 @@
-import { startupInfos } from "~/electron/events/app";
+import {
+    startupInfos,
+    updateSettings
+} from "~/electron/events/app";
 import {
     getMangaData,
     getRecentMangas
@@ -13,6 +16,10 @@ const events = {
     "app:startupInfos": {
         func: startupInfos,
         type: "handle"
+    },
+    "app:updateSettings": {
+        func: updateSettings,
+        type: "on"
     },
     "mangas:getMangaData": {
         func: getMangaData,
