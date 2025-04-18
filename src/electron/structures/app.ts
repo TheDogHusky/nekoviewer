@@ -52,10 +52,13 @@ export default class App {
     }
 
     async checkFirstTimeStartup() {
-        const dbFilePath = path.join(this.userDataFolder, "data.db");
-        if (!fs.existsSync(dbFilePath)) {
-            // If the file doesn't exist, create it
-            fs.writeFileSync(dbFilePath, "");
+        const firstStartupFilePath = path.join(this.userDataFolder, "firstStartup");
+        if (!fs.existsSync(firstStartupFilePath)) {
+            // If the file doesn't exist, it's most likely the first time the app is started
+            console.log("First time startup detected. Initializing database...");
+            // Create the file to indicate that the first startup has been completed
+            fs.writeFileSync(firstStartupFilePath, "true");
+            // Initialize the database
             await this.db.initializeOnFirstStartup();
         }
     }

@@ -10,3 +10,11 @@ export const mangasTable = sqliteTable("mangas", {
     genres: text("genres", { mode: "json" }).$type<string[]>(),
     volumes: text("volumes", { mode: "json" }).$type<MangaVolume[]>(),
 });
+
+/**
+ * Table to store app settings
+ */
+export const settingsTable = sqliteTable('settings', {
+    key: text('key').primaryKey(),
+    value: text('value', { mode: 'json' }).$type<any>()
+});
