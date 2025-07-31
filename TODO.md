@@ -42,6 +42,7 @@ userData folder
 ├── mangas
 │   ├── 1
 │   │   ├── cover.jpg
+│   │   ├── data.json
 │   │   ├── volumes
 │   │   │   ├── 1.pdf
 │   │   │   ├── 2.pdf
