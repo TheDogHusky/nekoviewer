@@ -27,7 +27,12 @@ export default defineNuxtConfig({
                             external: ["@libsql/client", "@libsql/win32-x64-msvc"],
                         }
                     }
-                }
+                },
+                onstart(args) {
+                    // Pass the --open-devtools flag to Electron
+                    args.startup([".", "--open-dev-tools=true"]);
+                    args.reload();
+                },
             },
             {
                 entry: 'src/electron/preload.ts',
@@ -36,7 +41,7 @@ export default defineNuxtConfig({
                 },
             },
         ],
-        renderer: {},
+        renderer: {}
     },
     app: {
         head: {
@@ -53,4 +58,5 @@ export default defineNuxtConfig({
         }
     },
     ssr: false,
+    spaLoadingTemplate: true
 })

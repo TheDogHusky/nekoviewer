@@ -24,7 +24,7 @@ export default class App {
     public app: typeof app = app;
     public userDataFolder: string = app.getPath("userData");
     public db: Database = new Database(this);
-    public settings: AppSettings = {};
+    public settings: { [p: string]: AppSettings[string] | undefined } = {};
 
     constructor() {
         this.init().catch((err) => {
@@ -59,7 +59,7 @@ export default class App {
      * Load settings from the database
      */
     async loadSettings() {
-        const settings = await this.db.db.select(settingsTable);
+        const settings = await this.db.db.select().from(settingsTable);
         settings.forEach((setting) => {
             this.settings[setting.key] = setting.value;
         });
@@ -82,11 +82,11 @@ export default class App {
 
     async checkFirstTimeStartup() {
         const firstStartupFilePath = path.join(this.userDataFolder, "firstStartup");
-        if (!fs.existsSync(firstStartupFilePath)) {
+        if (!fs.existsSync(firstStartupFilePath) || fs.readFileSync(firstStartupFilePath, "utf-8") === "true") {
             // If the file doesn't exist, it's most likely the first time the app is started
             console.log("First time startup detected. Initializing database...");
             // Create the file to indicate that the first startup has been completed
-            fs.writeFileSync(firstStartupFilePath, "true");
+            fs.writeFileSync(firstStartupFilePath, "false");
             // Initialize the database
             await this.db.initializeOnFirstStartup();
         }
@@ -133,6 +133,9 @@ export default class App {
         this.window.webContents.once("did-finish-load", () => {
             this.splashWindow?.destroy();
             this.window?.show();
+            if (process.env.NODE_ENV === "development") {
+                this.window?.webContents.openDevTools({ mode: 'detach' });
+            }
         });
     }
 

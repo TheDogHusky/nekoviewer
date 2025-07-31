@@ -14,7 +14,7 @@ export default class Database {
 
     constructor(app: App) {
         this.app = app;
-        this.file = app.userDataFolder + "/data.db";
+        this.file = process.env.NODE_ENV === "development" ? "../local-env.db" : app.userDataFolder + "/data.db";
         this.db = drizzle("file:" + this.file);
     }
 

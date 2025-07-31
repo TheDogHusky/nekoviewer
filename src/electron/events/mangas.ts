@@ -36,7 +36,7 @@ export async function getRecentMangas(): Promise<MangaData[]> {
                 "Comedy",
                 "Romance"
             ],
-            "cover": "/Tsugumomo/cover.jpg",
+            "cover": "/tsugumomo/cover.jpg",
             "volumes": []
         });
     }
