@@ -43,3 +43,5 @@ Start the app on development:
 ```bash
 yarn dev
 ```
+
+If it is the first time, it will create a firstStartup file in the project folder on development, allowing you to simulate a first startup by putting `true` in it. 
