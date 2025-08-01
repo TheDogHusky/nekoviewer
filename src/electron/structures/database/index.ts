@@ -14,22 +14,17 @@ export default class Database {
 
     constructor(app: App) {
         this.app = app;
-        this.file = process.env.NODE_ENV === "development" ? "../local-env.db" : app.userDataFolder + "/data.db";
+        this.file = process.env.NODE_ENV === "development" ? "local-dev.db" : app.userDataFolder + "/data.db";
+        console.log("Database file path:", path.resolve(this.file));
         this.db = drizzle("file:" + this.file);
+        this.initialize().catch((err) => {
+            console.error("Error initializing database:", err);
+        });
     }
 
-    async initializeOnFirstStartup() {
-        // Check if the database file exists
-        if (!fs.existsSync(this.file)) {
-            // If it doesn't exist, create it
-            fs.writeFileSync(this.file, '');
-        }
-
-        // Run migrations
-        console.log("Running migrations...");
+    async initialize() {
         await migrate(this.db, {
-            migrationsFolder: path.join(__dirname, "..", "src", "electron", "structures", "database", 'migrations')
+            migrationsFolder: path.join(this.app.app.getAppPath(), "drizzle")
         });
-        console.log("Migrations completed.");
     }
 }

@@ -81,14 +81,13 @@ export default class App {
     }
 
     async checkFirstTimeStartup() {
-        const firstStartupFilePath = path.join(this.userDataFolder, "firstStartup");
+        const firstStartupFilePath = app.isPackaged ? path.join(this.userDataFolder, "firstStartup") : "firstStartup";
         if (!fs.existsSync(firstStartupFilePath) || fs.readFileSync(firstStartupFilePath, "utf-8") === "true") {
             // If the file doesn't exist, it's most likely the first time the app is started
             console.log("First time startup detected. Initializing database...");
             // Create the file to indicate that the first startup has been completed
             fs.writeFileSync(firstStartupFilePath, "false");
-            // Initialize the database
-            await this.db.initializeOnFirstStartup();
+            // Other first-time startup logic can go here, such as tours, tutorials, etc.
         }
     }
 
