@@ -18,7 +18,7 @@ Things to do to make this app better, so I don't forget anything.
 - [ ] Library
 - [ ] Multiple reading modes
 - [ ] Epub and CBR
-- [ ] Store user data in a local database (.db file) (framework?) (in the future will be changed to accounts on my servers to allow cross-device synchronization)
+- [x] Store user data in a local database (.db file) (framework?) (in the future will be changed to accounts on my servers to allow cross-device synchronization) -> drizzle, data.db
 - [x] Figure out the "library" / "app home" folder on the computer to store imported manga and other ressources
 - [ ] Add keyboard shortcuts
 
@@ -33,7 +33,7 @@ Things to do to make this app better, so I don't forget anything.
 - [ ] Add a "library" collection in the database
 - [ ] Add a "reading" collection in the database
 - [ ] Add database logic in ~/electron/structures/database/index.ts
-- [ ] Use Drizzle for the database
+- [x] Use Drizzle for the database
 - [ ] DB: store mangas in userData/mangas -> /mangas/:id, volumes at /manga/:id/volumes/:volume, pages at /manga/:id/volumes/:volume where volume should be number.pdf (NOTE: if a volume is 18.5, it would be named as 19.pdf, and the volume number would be 18.5)
 
 ```
