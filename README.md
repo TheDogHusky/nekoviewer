@@ -34,14 +34,7 @@ yarn
 
 ### Database
 
-Make a local-dev.db file in the root folder. (empty) Then run
-
-```bash
-yarn migrations:generate
-yarn migrations:push
-```
-
-To create the database, and push the migrations to it.
+Make a local-dev.db file in the root folder.
 
 ### App
 
