@@ -11,7 +11,7 @@ Yet another manga reader, built with Nuxt3 and Electron.
 - [ ] Cross-platform
 - [ ] Cross-device
 
-You can have a list of upcoming features or work in the [TODO.md](TODO.md) file.
+You can have a list of upcoming features or work in the [TODO.md](TODO.md) file. Alongside the file, I brainstormed the structure and fonctionnality in details on [this figma figjam](https://www.figma.com/board/wezNRr88lBhBZW2xnqJAnE/NekoViewer-Brainstorm?node-id=3-2&t=fNbEX9cqlQ2X4sns-1), please take a look!
 
 ## Motivation
 
