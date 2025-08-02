@@ -4,7 +4,6 @@ import { migrate } from 'drizzle-orm/libsql/migrator';
 import { type Client } from '@libsql/client';
 import path from "node:path";
 import { settingsTable } from "./schemas";
-import fs from "node:fs";
 import { eq } from 'drizzle-orm';
 
 export default class Database {
