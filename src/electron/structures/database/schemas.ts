@@ -1,4 +1,11 @@
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import type {
+    GeneralSettings,
+    LibrarySettings,
+    AccessibilitySettings,
+    AppearanceSettings,
+    MiscellaneousSettings
+} from "~/electron/utils/types";
 
 // fits types/manga.d.ts
 export const mangasTable = sqliteTable("mangas", {
@@ -15,6 +22,9 @@ export const mangasTable = sqliteTable("mangas", {
  * Table to store app settings
  */
 export const settingsTable = sqliteTable('settings', {
-    key: text('key').primaryKey(),
-    value: text('value', { mode: 'json' }).$type<any>()
+    general: text('general', { mode: 'json' }).$type<GeneralSettings>(),
+    library: text('library', { mode: 'json' }).$type<LibrarySettings>(),
+    accessibility: text('accessibility', { mode: 'json' }).$type<AccessibilitySettings>(),
+    appearance: text('appearance', { mode: 'json' }).$type<AppearanceSettings>(),
+    miscellaneous: text('miscellaneous', { mode: 'json' }).$type<MiscellaneousSettings>()
 });

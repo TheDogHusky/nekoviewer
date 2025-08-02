@@ -2,6 +2,8 @@
  * Represents the settings for the application.
  */
 export interface AppSettings {
+    [key: string]: MiscellaneousSettings | LibrarySettings | AccessibilitySettings | GeneralSettings | AppearanceSettings | undefined | null;
+
     /**
      * Miscellaneous settings
      */

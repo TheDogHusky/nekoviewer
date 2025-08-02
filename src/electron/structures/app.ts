@@ -4,7 +4,9 @@ import events from "../events";
 import fs from "node:fs";
 import Database from "./database";
 import type { AppSettings } from "../utils/types";
-import { settingsTable } from "./database/schemas";
+import { settingsTable } from "~/electron/structures/database/schemas";
+import { eq } from "drizzle-orm";
+import { DEFAULT_SETTINGS_VALUES } from "~/electron/utils/constants";
 
 process.env.APP_ROOT = path.join(__dirname, "..");
 
@@ -24,7 +26,7 @@ export default class App {
     public app: typeof app = app;
     public userDataFolder: string = app.getPath("userData");
     public db: Database = new Database(this);
-    public settings: { [p: string]: AppSettings[string] | undefined } = {};
+    public settings: AppSettings = DEFAULT_SETTINGS_VALUES;
 
     constructor() {
         this.init().catch((err) => {
@@ -52,6 +54,7 @@ export default class App {
 
     async init() {
         await this.checkFirstTimeStartup();
+        await this.db.initialize();
         await this.loadSettings();
     }
 
@@ -60,8 +63,16 @@ export default class App {
      */
     async loadSettings() {
         const settings = await this.db.db.select().from(settingsTable);
-        settings.forEach((setting) => {
-            this.settings[setting.key] = setting.value;
+        if (settings.length === 0) {
+            console.log("No settings found in the database, initializing with default values.");
+            // Initialize with default values if no settings are found
+            this.settings = { ...DEFAULT_SETTINGS_VALUES };
+            await this.db.db.insert(settingsTable).values(this.settings);
+            console.log("Default settings initialized:", this.settings);
+            return;
+        }
+        Object.entries(settings[0]).forEach((setting) => {
+            this.settings[setting[0]] = setting[1];
         });
         console.log("Settings loaded:", this.settings);
     }
@@ -69,15 +80,24 @@ export default class App {
     /**
      * Update settings in the database
      * @param fields The fields to update
+     * @example
+     * ```typescript
+     * app.updateSettings({ general: { notifications: false } });
+     * ```
      */
     async updateSettings(fields: Partial<AppSettings>) {
-        this.settings = { ...this.settings, ...fields };
         for (const [key, value] of Object.entries(fields)) {
-            await this.db.db.insert(settingsTable).values({ key, value }).onConflictDoUpdate({
-                target: [settingsTable.key],
-                set: { value }
-            });
+            const current = this.settings[key] ?? {};
+            // Deep merge if the value is an object, otherwise just set the value
+            const merged = typeof value === "object" && value !== null
+                ? { ...current, ...value }
+                : value;
+            this.settings[key] = merged;
+            await this.db.db.update(settingsTable)
+                .set({ [key]: JSON.stringify(merged) });
         }
+
+        console.log("Settings updated:", this.settings);
     }
 
     async checkFirstTimeStartup() {

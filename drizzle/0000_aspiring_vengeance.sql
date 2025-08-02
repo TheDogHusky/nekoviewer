@@ -7,3 +7,11 @@ CREATE TABLE `mangas` (
 	`genres` text,
 	`volumes` text
 );
+--> statement-breakpoint
+CREATE TABLE `settings` (
+	`general` text,
+	`library` text,
+	`accessibility` text,
+	`appearance` text,
+	`miscellaneous` text
+);

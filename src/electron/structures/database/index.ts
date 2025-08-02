@@ -16,9 +16,6 @@ export default class Database {
         this.file = process.env.NODE_ENV === "development" ? "local-dev.db" : app.userDataFolder + "/data.db";
         console.log("Database file path:", path.resolve(this.file));
         this.db = drizzle("file:" + this.file);
-        this.initialize().catch((err) => {
-            console.error("Error initializing database:", err);
-        });
     }
 
     async initialize() {
