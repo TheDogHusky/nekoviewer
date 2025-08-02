@@ -3,8 +3,6 @@ import { drizzle, LibSQLDatabase } from 'drizzle-orm/libsql';
 import { migrate } from 'drizzle-orm/libsql/migrator';
 import { type Client } from '@libsql/client';
 import path from "node:path";
-import { settingsTable } from "./schemas";
-import { eq } from 'drizzle-orm';
 
 export default class Database {
     public app: App;

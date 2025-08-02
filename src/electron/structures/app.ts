@@ -5,7 +5,6 @@ import fs from "node:fs";
 import Database from "./database";
 import type { AppSettings } from "../utils/types";
 import { settingsTable } from "~/electron/structures/database/schemas";
-import { eq } from "drizzle-orm";
 import { DEFAULT_SETTINGS_VALUES } from "~/electron/utils/constants";
 
 process.env.APP_ROOT = path.join(__dirname, "..");
