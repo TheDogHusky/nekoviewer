@@ -2,6 +2,7 @@ dist-electron
 .husky/_
 local-dev.db
 firstStartup
+release
 
 src/public/**/*.pdf
 

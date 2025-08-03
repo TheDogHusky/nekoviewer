@@ -5,7 +5,7 @@ import type {
     AccessibilitySettings,
     AppearanceSettings,
     MiscellaneousSettings
-} from "~/electron/utils/types";
+} from "../../utils/types";
 
 // fits types/manga.d.ts
 export const mangasTable = sqliteTable("mangas", {

@@ -4,8 +4,9 @@ import events from "../events";
 import fs from "node:fs";
 import Database from "./database";
 import type { AppSettings } from "../utils/types";
-import { settingsTable } from "~/electron/structures/database/schemas";
-import { DEFAULT_SETTINGS_VALUES } from "~/electron/utils/constants";
+import { settingsTable } from "./database/schemas";
+import { DEFAULT_SETTINGS_VALUES } from "../utils/constants";
+import { initializeLogging } from "../utils/logger";
 
 process.env.APP_ROOT = path.join(__dirname, "..");
 
@@ -28,6 +29,8 @@ export default class App {
     public settings: AppSettings = DEFAULT_SETTINGS_VALUES;
 
     constructor() {
+        initializeLogging();
+
         this.init().catch((err) => {
             console.error("Error initializing app:", err);
         });
@@ -114,6 +117,10 @@ export default class App {
      * Create the main window of the application, alongside the splash screen
      */
     createWindow() {
+        const publicDirectory = app.isPackaged ? path.join(__dirname, "..", ".output", "public") : path.join(__dirname, "..", "src", "public");
+        const icon = path.join(publicDirectory, "favicon.ico");
+        const splash = path.join(publicDirectory, "splash.html");
+
         this.window = new BrowserWindow({
             webPreferences: {
                 preload: path.join(MAIN_DIST, "preload.js"),
@@ -123,7 +130,7 @@ export default class App {
             minWidth: 400,
             minHeight: 400,
             show: false,
-            icon: path.join(__dirname, "..", "src", "public", "favicon.ico"),
+            icon: icon,
             autoHideMenuBar: true,
             titleBarStyle: "hidden"
         });
@@ -132,14 +139,14 @@ export default class App {
             width: 400,
             height: 400,
             frame: false,
-            icon: path.join(__dirname, "..", "src", "public", "favicon.ico"),
+            icon: icon,
             alwaysOnTop: true,
             skipTaskbar: true,
             resizable: false,
             closable: false,
         });
 
-        this.splashWindow?.loadFile(path.join(__dirname, "..", "src", "public", "splash.html"));
+        this.splashWindow?.loadFile(splash);
 
         if (process.env.VITE_DEV_SERVER_URL) {
             this.window.loadURL(process.env.VITE_DEV_SERVER_URL);
