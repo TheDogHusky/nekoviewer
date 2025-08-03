@@ -117,10 +117,6 @@ export default class App {
      * Create the main window of the application, alongside the splash screen
      */
     createWindow() {
-        const publicDirectory = app.isPackaged ? path.join(__dirname, "..", ".output", "public") : path.join(__dirname, "..", "src", "public");
-        const icon = path.join(publicDirectory, "favicon.ico");
-        const splash = path.join(publicDirectory, "splash.html");
-
         this.window = new BrowserWindow({
             webPreferences: {
                 preload: path.join(MAIN_DIST, "preload.js"),
@@ -130,7 +126,7 @@ export default class App {
             minWidth: 400,
             minHeight: 400,
             show: false,
-            icon: icon,
+            icon: path.join(process.env.VITE_PUBLIC!, "favicon.ico"),
             autoHideMenuBar: true,
             titleBarStyle: "hidden"
         });
@@ -139,14 +135,14 @@ export default class App {
             width: 400,
             height: 400,
             frame: false,
-            icon: icon,
+            icon: path.join(process.env.VITE_PUBLIC!, "favicon.ico"),
             alwaysOnTop: true,
             skipTaskbar: true,
             resizable: false,
             closable: false,
         });
 
-        this.splashWindow?.loadFile(splash);
+        this.splashWindow?.loadFile(path.join(process.env.VITE_PUBLIC!, "splash.html"));
 
         if (process.env.VITE_DEV_SERVER_URL) {
             this.window.loadURL(process.env.VITE_DEV_SERVER_URL);
