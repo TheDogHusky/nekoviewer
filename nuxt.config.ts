@@ -20,6 +20,7 @@ export default defineNuxtConfig({
                         }
                     },
                     build: {
+                        minify: process.env.NODE_ENV === 'production',
                         commonjsOptions: {
                             dynamicRequireTargets: ["@libsql/win32-x64-msvc"]
                         },
@@ -39,6 +40,11 @@ export default defineNuxtConfig({
                 onstart(args) {
                     args.reload()
                 },
+                vite: {
+                    build: {
+                        minify: process.env.NODE_ENV === 'production',
+                    }
+                },
             },
         ],
         renderer: {}
@@ -48,7 +54,9 @@ export default defineNuxtConfig({
             meta: [
                 { "http-equiv": "Content-Security-Policy", content: "script-src 'self' 'unsafe-inline'" },
             ]
-        }
+        },
+        baseURL: './',
+        buildAssetsDir: '/',
     },
     vite: {
         resolve: {
@@ -58,5 +66,18 @@ export default defineNuxtConfig({
         }
     },
     ssr: false,
-    spaLoadingTemplate: true
+    spaLoadingTemplate: true,
+    runtimeConfig: {
+        app: {
+            baseURL: './',
+            buildAssetsDir: '/',
+        },
+    },
+    nitro: {
+        runtimeConfig: {
+            app: {
+                baseURL: './',
+            }
+        }
+    },
 })

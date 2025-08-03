@@ -7,7 +7,7 @@
     "description": "Yet another manga viewer, focused on user-friendly UI and great UX.",
     "license": "gnu-gpl-3.0-or-later",
     "scripts": {
-        "build": "nuxi build --prerender && electron-builder",
+        "build": "nuxi generate --prerender && electron-builder",
         "dev": "nuxt dev --no-fork",
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
@@ -20,6 +20,7 @@
     "dependencies": {
         "@libsql/client": "^0.15.4",
         "@nuxt/image": "1.9.0",
+        "cross-env": "^10.0.0",
         "drizzle-orm": "^0.42.0",
         "electron-log": "^5.4.2",
         "floating-vue": "^5.2.2",

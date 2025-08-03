@@ -2,13 +2,16 @@
 {
     "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
     "appId": "fr.classydev.nekoviewer",
+    "productName": "NekoViewer",
     "asar": false,
     "directories": {
-        "output": "release/${version}"
+        "output": "release/${version}",
+        "buildResources": "src/public"
     },
     "files": [
         ".output/**/*",
-        "dist-electron"
+        "dist-electron",
+        "drizzle/**/*"
     ],
     "mac": {
         "artifactName": "${productName}_${version}.${ext}",
@@ -19,7 +22,13 @@
     "win": {
         "target": [
             {
-                "target": "nsis",
+                "target": "nsis-web",
+                "arch": [
+                    "x64"
+                ]
+            },
+            {
+                "target": "portable",
                 "arch": [
                     "x64"
                 ]
@@ -27,11 +36,12 @@
         ],
         "artifactName": "${productName}_${version}.${ext}"
     },
-    "nsis": {
+    "nsisWeb": {
         "oneClick": false,
         "perMachine": false,
         "allowToChangeInstallationDirectory": true,
-        "deleteAppDataOnUninstall": false
+        "deleteAppDataOnUninstall": false,
+        "license": "./LICENSE"
     },
     "linux": {
         "target": ["AppImage", "deb", "pacman"]
