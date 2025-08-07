@@ -8,7 +8,7 @@ export default defineNuxtConfig({
         appManifest: false
     },
     router: {
-        option: {
+        options: {
             hashMode: true
         }
     },
@@ -62,11 +62,13 @@ export default defineNuxtConfig({
                 { "http-equiv": "Content-Security-Policy", content: "script-src 'self' 'unsafe-inline'" },
             ]
         },
-        baseURL: './'
+        baseURL: './',
+        buildAssetsDir: process.env.NODE_ENV === 'production' ? '/' : '/_nuxt'
     },
     runtimeConfig: {
         app: {
-            baseURL: './'
+            baseURL: './',
+            buildAssetsDir: process.env.NODE_ENV === 'production' ? '/' : '/_nuxt'
         }
     },
     vite: {
