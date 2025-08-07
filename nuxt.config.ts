@@ -1,10 +1,17 @@
 import path from 'node:path';
-import pkg from './package.json';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     compatibilityDate: '2024-11-01',
     devtools: { enabled: true },
+    experimental: {
+        appManifest: false
+    },
+    router: {
+        option: {
+            hashMode: true
+        }
+    },
     srcDir: 'src',
     css: ['~/assets/css/main.css'],
     modules: ['nuxt-electron', 'floating-vue/nuxt', '@nuxt/image'],
@@ -55,8 +62,12 @@ export default defineNuxtConfig({
                 { "http-equiv": "Content-Security-Policy", content: "script-src 'self' 'unsafe-inline'" },
             ]
         },
-        baseURL: './',
-        buildAssetsDir: '/',
+        baseURL: './'
+    },
+    runtimeConfig: {
+        app: {
+            baseURL: './'
+        }
     },
     vite: {
         resolve: {
@@ -66,18 +77,5 @@ export default defineNuxtConfig({
         }
     },
     ssr: false,
-    spaLoadingTemplate: true,
-    runtimeConfig: {
-        app: {
-            baseURL: './',
-            buildAssetsDir: '/',
-        },
-    },
-    nitro: {
-        runtimeConfig: {
-            app: {
-                baseURL: './',
-            }
-        }
-    },
-})
+    spaLoadingTemplate: true
+});

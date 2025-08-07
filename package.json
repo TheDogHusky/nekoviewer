@@ -7,7 +7,7 @@
     "description": "Yet another manga viewer, focused on user-friendly UI and great UX.",
     "license": "gnu-gpl-3.0-or-later",
     "scripts": {
-        "build": "nuxi generate --prerender && electron-builder",
+        "build": "nuxi build --prerender && electron-builder",
         "dev": "nuxt dev --no-fork",
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
