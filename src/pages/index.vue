@@ -1,8 +1,5 @@
 <script setup lang="ts">
-const infos: Ref<{
-    version: string;
-    platform: string;
-} | null> | undefined = inject('infos');
+const infos: Ref<AppStartupInfos> | undefined = inject('infos');
 
 const recent: Ref<MangaData[] | null> = ref(await window.ipcRenderer.invoke('mangas:getRecentMangas'));
 </script>

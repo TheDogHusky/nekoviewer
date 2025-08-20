@@ -1,5 +1,5 @@
 import App from "~/electron/structures/app";
-import type { AppSettings } from "~/electron/utils/types";
+import type { AppSettings } from "~/types/app";
 
 /**
  * Gets the application version and platform

@@ -1,4 +1,4 @@
-import App from '../app';
+import App from '~/electron/structures/app';
 import { drizzle, LibSQLDatabase } from 'drizzle-orm/libsql';
 import { migrate } from 'drizzle-orm/libsql/migrator';
 import { type Client } from '@libsql/client';

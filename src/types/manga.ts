@@ -1,7 +1,7 @@
 /**
  * The data structure for the manga
  */
-interface MangaData {
+export interface MangaData {
     /**
      * Manga name
      */
@@ -33,7 +33,7 @@ interface MangaData {
 /**
  * The data structure for a manga volume
  */
-interface MangaVolume {
+export interface MangaVolume {
     /**
      * The volume name
      */
@@ -48,7 +48,7 @@ interface MangaVolume {
     number: number;
 }
 
-interface MangaDataIPCAnswer {
+export interface MangaDataIPCAnswer {
     files: string[];
     coverImagePath: string;
     data: MangaData;

@@ -12,6 +12,12 @@ export default defineNuxtConfig({
             hashMode: true
         }
     },
+    imports: {
+        dirs: [
+            "types/**/*.ts",
+            "types/*.ts"
+        ]
+    },
     srcDir: 'src',
     css: ['~/assets/css/main.css'],
     modules: ['nuxt-electron', 'floating-vue/nuxt', '@nuxt/image'],

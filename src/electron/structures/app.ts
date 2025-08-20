@@ -3,10 +3,11 @@ import path from "node:path";
 import events from "../events";
 import fs from "node:fs";
 import Database from "./database";
-import type { AppSettings } from "../utils/types";
+import type { AppSettings } from "~/types/app";
 import { settingsTable } from "./database/schemas";
 import { DEFAULT_SETTINGS_VALUES } from "../utils/constants";
 import { initializeLogging } from "../utils/logger";
+import type { EventHandler } from "~/types/app";
 
 process.env.APP_ROOT = path.join(__dirname, "..");
 
