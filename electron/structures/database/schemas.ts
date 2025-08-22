@@ -5,8 +5,8 @@ import type {
     AccessibilitySettings,
     AppearanceSettings,
     MiscellaneousSettings
-} from "~/types/app";
-import type { MangaVolume } from "~/types/manga";
+} from "#types/app";
+import type { MangaVolume } from "#types/manga";
 import { sql } from "drizzle-orm";
 
 /**

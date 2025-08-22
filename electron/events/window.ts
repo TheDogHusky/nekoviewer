@@ -1,4 +1,4 @@
-import App from "~/electron/structures/app";
+import App from "#electron/structures/app";
 
 /**
  * Sent from the frontend whenever the user wants to minimize the window

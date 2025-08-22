@@ -18,18 +18,22 @@ export default defineNuxtConfig({
             "types/*.ts"
         ]
     },
-    srcDir: 'src',
+    image: {
+        dir: "app/public"
+    },
     css: ['~/assets/css/main.css'],
     modules: ['nuxt-electron', 'floating-vue/nuxt', '@nuxt/image'],
     electron: {
         disableDefaultOptions: true,
         build: [
             {
-                entry: 'src/electron/main.ts',
+                entry: 'electron/main.ts',
                 vite: {
                     resolve: {
                         alias: {
-                            '~': path.resolve(__dirname, 'src'),
+                            '~': path.resolve(__dirname, 'app'),
+                            '#types': path.resolve(__dirname, 'types'),
+                            '#electron': path.resolve(__dirname, 'electron')
                         }
                     },
                     build: {
@@ -49,7 +53,7 @@ export default defineNuxtConfig({
                 },
             },
             {
-                entry: 'src/electron/preload.ts',
+                entry: 'electron/preload.ts',
                 onstart(args) {
                     args.reload()
                 },
@@ -80,7 +84,9 @@ export default defineNuxtConfig({
     vite: {
         resolve: {
             alias: {
-                '~': path.resolve(__dirname, 'src'),
+                '~': path.resolve(__dirname, 'app'),
+                '#types': path.resolve(__dirname, 'types'),
+                '#electron': path.resolve(__dirname, 'electron')
             }
         }
     },

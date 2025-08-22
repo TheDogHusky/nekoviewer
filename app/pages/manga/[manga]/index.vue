@@ -3,6 +3,7 @@ const route = useRoute();
 const manga = route.params.manga;
 
 const data = ref<MangaDataIPCAnswer>(await window.ipcRenderer.invoke('mangas:getMangaData', manga));
+console.log(data);
 </script>
 
 <template>

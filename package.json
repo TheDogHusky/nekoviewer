@@ -19,8 +19,7 @@
     },
     "dependencies": {
         "@libsql/client": "^0.15.4",
-        "@nuxt/image": "1.9.0",
-        "cross-env": "^10.0.0",
+        "@nuxt/image": "^1.11.0",
         "drizzle-orm": "^0.42.0",
         "electron-log": "^5.4.2",
         "floating-vue": "^5.2.2",
@@ -30,13 +29,13 @@
     "packageManager": "yarn@1.22.22",
     "devDependencies": {
         "drizzle-kit": "^0.31.0",
-        "electron": "^37.2.5",
-        "electron-builder": "^26.0.12",
+        "electron": "^37.3.1",
+        "electron-builder": "^26.0.19",
         "husky": "^9.1.7",
-        "lint-staged": "^15.4.3",
-        "nuxt": "^3.15.1",
+        "lint-staged": "^16.1.5",
+        "nuxt": "^4.0.3",
         "nuxt-electron": "^0.7.0",
-        "prettier": "3.5.2",
+        "prettier": "^3.6.2",
         "vite-plugin-electron": "^0.29.0",
         "vite-plugin-electron-renderer": "^0.14.6"
     },
