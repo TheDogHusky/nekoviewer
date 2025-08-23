@@ -18,9 +18,6 @@ export default defineNuxtConfig({
             "types/*.ts"
         ]
     },
-    image: {
-        dir: "app/public"
-    },
     css: ['~/assets/css/main.css'],
     modules: ['nuxt-electron', 'floating-vue/nuxt', '@nuxt/image'],
     electron: {

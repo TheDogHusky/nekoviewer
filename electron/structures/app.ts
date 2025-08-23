@@ -118,7 +118,7 @@ export default class App {
      * Create the main window of the application, alongside the splash screen
      */
     createWindow() {
-        const publicDirectory = app.isPackaged ? process.env.VITE_PUBLIC! : path.join(process.env.APP_ROOT!, "app", "public");
+        const publicDirectory = app.isPackaged ? process.env.VITE_PUBLIC! : path.join(process.env.APP_ROOT!, "public");
 
         this.window = new BrowserWindow({
             webPreferences: {

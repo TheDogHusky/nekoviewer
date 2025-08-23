@@ -4,7 +4,7 @@ local-dev.db
 firstStartup
 release
 
-app/public/**/*.pdf
+public/**/*.pdf
 
 # Nuxt dev/build outputs
 .output
