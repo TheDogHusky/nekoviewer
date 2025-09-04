@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     css: ['~/assets/css/main.css'],
     modules: ['nuxt-electron', 'floating-vue/nuxt', '@nuxt/image'],
     electron: {
-        disableDefaultOptions: true,
+        disableDefaultOptions: process.env.NODE_ENV !== 'production',
         build: [
             {
                 entry: 'src/electron/main.ts',
