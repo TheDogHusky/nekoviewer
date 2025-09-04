@@ -1,11 +1,12 @@
 CREATE TABLE `mangas` (
 	`id` integer PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
-	`description` text NOT NULL,
-	`author` text NOT NULL,
-	`cover` text NOT NULL,
+	`description` text,
+	`author` text,
+	`cover` text,
 	`genres` text,
-	`volumes` text
+	`volumes` text,
+	`display_name` text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `settings` (

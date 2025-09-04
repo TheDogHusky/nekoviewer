@@ -1,12 +1,13 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
-import events from "../events";
+import events from "#electron/events";
 import fs from "node:fs";
-import Database from "./database";
-import type { AppSettings } from "../utils/types";
-import { settingsTable } from "./database/schemas";
-import { DEFAULT_SETTINGS_VALUES } from "../utils/constants";
-import { initializeLogging } from "../utils/logger";
+import Database from "#electron/structures/database";
+import type { AppSettings } from "#types/app";
+import { settingsTable } from "#electron/structures/database/schemas";
+import { DEFAULT_SETTINGS_VALUES } from "#electron/utils/constants";
+import { initializeLogging } from "#electron/utils/logger";
+import type { EventHandler } from "#types/app";
 
 process.env.APP_ROOT = path.join(__dirname, "..");
 
@@ -117,7 +118,7 @@ export default class App {
      * Create the main window of the application, alongside the splash screen
      */
     createWindow() {
-        const publicDirectory = app.isPackaged ? process.env.VITE_PUBLIC! : path.join(process.env.APP_ROOT!, "src", "public");
+        const publicDirectory = app.isPackaged ? process.env.VITE_PUBLIC! : path.join(process.env.APP_ROOT!, "public");
 
         this.window = new BrowserWindow({
             webPreferences: {

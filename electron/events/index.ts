@@ -1,16 +1,16 @@
 import {
     startupInfos,
     updateSettings
-} from "~/electron/events/app";
+} from "#electron/events/app";
 import {
     getMangaData,
     getRecentMangas
-} from "~/electron/events/mangas";
+} from "#electron/events/mangas";
 import {
     onMinimize,
     onMaximize,
     onClose
-} from "~/electron/events/window";
+} from "#electron/events/window";
 
 const events = {
     "app:startupInfos": {
