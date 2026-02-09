@@ -6,7 +6,7 @@
  */
 @font-face {
     font-family: "NerdFontsSymbols Nerd Font";
-    src: url("../font/nf-icons/SymbolsNerdFontMono-Regular.ttf")
+    src: url("../app/assets/font/nf-icons/SymbolsNerdFontMono-Regular.ttf")
         format("truetype");
     font-weight: normal;
     font-style: normal;

@@ -8,6 +8,7 @@ import { settingsTable } from "#electron/structures/database/schemas";
 import { DEFAULT_SETTINGS_VALUES } from "#electron/utils/constants";
 import { initializeLogging } from "#electron/utils/logger";
 import type { EventHandler } from "#types/app";
+import * as Splashscreen from "@trodi/electron-splashscreen";
 
 process.env.APP_ROOT = path.join(__dirname, "..");
 
@@ -49,9 +50,9 @@ export default class App {
             }
         });
 
-        app.whenReady().then(() => {
+        app.whenReady().then(async () => {
             this.initIpc();
-            this.createWindow();
+            await this.createWindow();
         });
     }
 
@@ -117,50 +118,44 @@ export default class App {
     /**
      * Create the main window of the application, alongside the splash screen
      */
-    createWindow() {
-        const publicDirectory = app.isPackaged ? process.env.VITE_PUBLIC! : path.join(process.env.APP_ROOT!, "public");
+    async createWindow() {
+        const publicDirectory = app.isPackaged
+            ? process.env.VITE_PUBLIC!
+            : path.join(process.env.APP_ROOT!, "public");
 
-        this.window = new BrowserWindow({
-            webPreferences: {
-                preload: path.join(MAIN_DIST, "preload.js"),
+        this.window = Splashscreen.initSplashScreen({
+            windowOpts: {
+                webPreferences: {
+                    preload: path.join(MAIN_DIST, "preload.js"),
+                },
+                width: 1224,
+                height: 768,
+                minWidth: 400,
+                minHeight: 400,
+                show: false,
+                icon: path.join(publicDirectory, "favicon.ico"),
+                autoHideMenuBar: true,
+                titleBarStyle: "hidden",
             },
-            width: 1224,
-            height: 768,
-            minWidth: 400,
-            minHeight: 400,
-            show: false,
-            icon: path.join(publicDirectory, "favicon.ico"),
-            autoHideMenuBar: true,
-            titleBarStyle: "hidden"
-        });
-
-        this.splashWindow = new BrowserWindow({
-            width: 400,
-            height: 400,
-            frame: false,
-            icon: path.join(publicDirectory, "favicon.ico"),
-            alwaysOnTop: true,
-            skipTaskbar: true,
-            resizable: false,
-            closable: false,
-        });
-
-        this.splashWindow?.loadFile(path.join(publicDirectory, "splash.html"));
-
-        if (process.env.VITE_DEV_SERVER_URL) {
-            this.window.loadURL(process.env.VITE_DEV_SERVER_URL);
-            this.window.webContents.openDevTools();
-        } else {
-            this.window.loadFile(path.join(process.env.VITE_PUBLIC!, "index.html"));
-        }
-
-        this.window.webContents.once("did-finish-load", () => {
-            this.splashWindow?.destroy();
-            this.window?.show();
-            if (process.env.NODE_ENV === "development") {
-                this.window?.webContents.openDevTools({ mode: 'detach' });
+            templateUrl: path.join(publicDirectory, "splash.html"),
+            splashScreenOpts: {
+                width: 400,
+                height: 400,
+                frame: false,
+                icon: path.join(publicDirectory, "favicon.ico"),
+                alwaysOnTop: true,
+                skipTaskbar: true,
+                resizable: false,
+                closable: false,
             }
         });
+
+        if (process.env.VITE_DEV_SERVER_URL) {
+            await this.window.loadURL(process.env.VITE_DEV_SERVER_URL);
+            this.window.webContents.openDevTools();
+        } else {
+            await this.window.loadFile(path.join(process.env.VITE_PUBLIC!, "index.html"));
+        }
     }
 
     /**
