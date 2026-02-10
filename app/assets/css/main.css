@@ -251,6 +251,11 @@ h2 {
     align-items: center;
 }
 
+.titlebar * {
+    -webkit-app-region: no-drag;
+    outline: none;
+}
+
 .titlebar-items {
     display: flex;
     flex-direction: row;
@@ -265,7 +270,6 @@ h2 {
     gap: 0;
     padding: 0;
     margin: 0;
-    -webkit-app-region: no-drag;
 }
 
 .titlebar-icon {
@@ -739,7 +743,6 @@ h2 {
 }
 
 .manga img {
-    width: 100%;
     border-radius: 0.5rem;
 }
 

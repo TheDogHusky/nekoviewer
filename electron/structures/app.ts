@@ -167,14 +167,15 @@ export default class App {
             const eventHandler = value as EventHandler;
             switch (eventHandler.type) {
                 case 'handle':
-                    // handle expects an IpcMainInvokeEvent listener
-                    ipcMain.handle(key, eventHandler.func as (event: IpcMainInvokeEvent, ...args: any[]) => any);
+                    ipcMain.handle(key, (event, ...args) =>
+                        (eventHandler.func as any).apply(this, [event as IpcMainInvokeEvent, ...args])
+                    );
                     break;
                 case 'on':
-                    ipcMain.on(key, eventHandler.func as (event: IpcMainEvent, ...args: any[]) => any);
+                    ipcMain.on(key, (event, ...args) => (eventHandler.func as any).apply(this, [event as IpcMainEvent, ...args]));
                     break;
                 case 'once':
-                    ipcMain.once(key, eventHandler.func as (event: IpcMainEvent, ...args: any[]) => any);
+                    ipcMain.once(key, (event, ...args) => (eventHandler.func as any).apply(this, [event as IpcMainEvent, ...args]));
                     break;
                 default:
                     console.warn(`Unknown IPC handler type for ${key}: ${String((eventHandler as any).type)}`);
