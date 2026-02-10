@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain } from "electron";
+import type { IpcMainEvent, IpcMainInvokeEvent } from "electron";
 import path from "node:path";
 import events from "#electron/events";
 import fs from "node:fs";
@@ -44,9 +45,9 @@ export default class App {
             }
         });
 
-        app.on("activate", () => {
+        app.on("activate", async () => {
             if (BrowserWindow.getAllWindows().length === 0) {
-                this.createWindow();
+                await this.createWindow();
             }
         });
 
@@ -75,8 +76,9 @@ export default class App {
             console.log("Default settings initialized:", this.settings);
             return;
         }
-        Object.entries(settings[0]).forEach((setting) => {
-            this.settings[setting[0]] = setting[1];
+        const dbSettings: Record<string, any> = settings[0] ?? {};
+        Object.entries(dbSettings).forEach(([key, value]) => {
+            this.settings[key] = value;
         });
         console.log("Settings loaded:", this.settings);
     }
@@ -163,7 +165,20 @@ export default class App {
     initIpc() {
         Object.entries(events).forEach(([key, value]) => {
             const eventHandler = value as EventHandler;
-            ipcMain[eventHandler.type](key, (e, data) => eventHandler.func.call(this, e, data));
+            switch (eventHandler.type) {
+                case 'handle':
+                    // handle expects an IpcMainInvokeEvent listener
+                    ipcMain.handle(key, eventHandler.func as (event: IpcMainInvokeEvent, ...args: any[]) => any);
+                    break;
+                case 'on':
+                    ipcMain.on(key, eventHandler.func as (event: IpcMainEvent, ...args: any[]) => any);
+                    break;
+                case 'once':
+                    ipcMain.once(key, eventHandler.func as (event: IpcMainEvent, ...args: any[]) => any);
+                    break;
+                default:
+                    console.warn(`Unknown IPC handler type for ${key}: ${String((eventHandler as any).type)}`);
+            }
         });
     }
 }

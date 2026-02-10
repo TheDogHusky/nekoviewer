@@ -1,4 +1,4 @@
-import App from '~/electron/structures/app';
+import App from '#electron/structures/app';
 import type { IpcMainEvent, IpcMainInvokeEvent } from 'electron';
 
 export interface EventHandler {
