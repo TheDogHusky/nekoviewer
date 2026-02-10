@@ -145,8 +145,7 @@ export default class App {
                 icon: path.join(publicDirectory, "favicon.ico"),
                 alwaysOnTop: true,
                 skipTaskbar: true,
-                resizable: false,
-                closable: false,
+                resizable: false
             }
         });
 
