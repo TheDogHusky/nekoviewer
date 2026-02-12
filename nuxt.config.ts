@@ -14,8 +14,8 @@ export default defineNuxtConfig({
     },
     imports: {
         dirs: [
-            "types/**/*.ts",
-            "types/*.ts"
+            "shared/types/**/*.ts",
+            "shared/types/*.ts"
         ]
     },
     css: ['~/assets/css/main.css'],
@@ -29,8 +29,9 @@ export default defineNuxtConfig({
                     resolve: {
                         alias: {
                             '~': path.resolve(__dirname, 'app'),
-                            '#types': path.resolve(__dirname, 'types'),
-                            '#electron': path.resolve(__dirname, 'electron')
+                            '#types': path.resolve(__dirname, 'shared/types'),
+                            '#electron': path.resolve(__dirname, 'electron'),
+                            '#utils': path.resolve(__dirname, 'shared/utils')
                         }
                     },
                     build: {
@@ -82,11 +83,30 @@ export default defineNuxtConfig({
         resolve: {
             alias: {
                 '~': path.resolve(__dirname, 'app'),
-                '#types': path.resolve(__dirname, 'types'),
+                '#types': path.resolve(__dirname, 'shared/types'),
                 '#electron': path.resolve(__dirname, 'electron')
             }
         }
     },
     ssr: false,
-    spaLoadingTemplate: true
+    spaLoadingTemplate: true,
+
+    // since nuxt 4
+    typescript: {
+        tsConfig: {
+            include: [
+                "../app/**/*",
+                "../electron/**/*",
+                "../shared/**/*"
+            ],
+            compilerOptions: {
+                baseUrl: ".",
+                paths: {
+                    "#types/*": ["../shared/types/*"],
+                    "#electron/*": ["../electron/*"],
+                    "#utils/*": ["../shared/utils/*"]
+                }
+            }
+        },
+    }
 });

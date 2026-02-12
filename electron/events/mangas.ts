@@ -2,6 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import type { IpcMainInvokeEvent } from "electron";
 import { extractNumberFromFilename } from "#electron/utils/functions";
+import type { MangaData, MangaDataIPCAnswer } from "#types/manga";
 
 export async function getMangaData(event: IpcMainInvokeEvent, manga: string): Promise<MangaDataIPCAnswer> {
     const files = await readdir(path.join(__dirname, "..", 'public', manga)).catch(() => []);
