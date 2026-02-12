@@ -14,3 +14,5 @@ export const DEFAULT_SETTINGS_VALUES = {
     appearance: {},
     miscellaneous: {}
 };
+
+export const EXTENSIONS = ["cbz", "cbr", "pdf"];
