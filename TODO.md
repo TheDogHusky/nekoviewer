@@ -32,9 +32,10 @@ Things to do to make this app better, so I don't forget anything.
 - [ ] Add a "settings" collection in the database
 - [ ] Add a "library" collection in the database
 - [ ] Add a "recents" collection in the database
-- [ ] Add database logic in ~/electron/structures/database/index.ts
+- [x] Add database logic in ~/electron/structures/database/index.ts
 - [x] Use Drizzle for the database
 - [ ] DB: store mangas in userData/mangas -> /mangas/:id, volumes at /manga/:id/volumes/:volume, pages at /manga/:id/volumes/:volume where volume should be number.pdf (NOTE: if a volume is 18.5, it would be named as 19.pdf, and the volume number would be 18.5)
+- [ ] Add scanner logic to scan for mangas and import them (WIP)
 
 ```
 userData folder
