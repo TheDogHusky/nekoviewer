@@ -10,6 +10,7 @@ import { DEFAULT_SETTINGS_VALUES } from "#electron/utils/constants";
 import { initializeLogging } from "#electron/utils/logger";
 import type { EventHandler } from "#types/app";
 import * as Splashscreen from "@trodi/electron-splashscreen";
+import MangaScanner from "#electron/structures/scanner";
 
 process.env.APP_ROOT = path.join(__dirname, "..");
 
@@ -30,6 +31,7 @@ export default class App {
     public userDataFolder: string = app.getPath("userData");
     public db: Database = new Database(this);
     public settings: AppSettings = DEFAULT_SETTINGS_VALUES;
+    public scanner: MangaScanner = new MangaScanner(this);
 
     constructor() {
         initializeLogging();

@@ -1,5 +1,12 @@
 import path from 'node:path';
 
+const viteResolveAlias = {
+    '~': path.resolve(__dirname, 'app'),
+    '#types': path.resolve(__dirname, 'shared/types'),
+    '#electron': path.resolve(__dirname, 'electron'),
+    '#utils': path.resolve(__dirname, 'shared/utils')
+};
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     compatibilityDate: '2024-11-01',
@@ -27,12 +34,7 @@ export default defineNuxtConfig({
                 entry: 'electron/main.ts',
                 vite: {
                     resolve: {
-                        alias: {
-                            '~': path.resolve(__dirname, 'app'),
-                            '#types': path.resolve(__dirname, 'shared/types'),
-                            '#electron': path.resolve(__dirname, 'electron'),
-                            '#utils': path.resolve(__dirname, 'shared/utils')
-                        }
+                        alias: viteResolveAlias
                     },
                     build: {
                         minify: process.env.NODE_ENV === 'production',
@@ -61,6 +63,20 @@ export default defineNuxtConfig({
                     }
                 },
             },
+            {
+                entry: 'electron/workers/scanner.worker.ts',
+                onstart(args) {
+                    args.reload()
+                },
+                vite: {
+                    build: {
+                        minify: process.env.NODE_ENV === 'production',
+                    },
+                    resolve: {
+                        alias: viteResolveAlias
+                    }
+                }
+            }
         ],
         renderer: {}
     },

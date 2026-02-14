@@ -4,7 +4,8 @@ import {
 } from "#electron/events/app";
 import {
     getMangaData,
-    getRecentMangas
+    getRecentMangas,
+    scanMangaDirectory
 } from "#electron/events/mangas";
 import {
     onMinimize,
@@ -27,6 +28,10 @@ const events = {
     },
     "mangas:getRecentMangas": {
         func: getRecentMangas,
+        type: "handle"
+    },
+    "mangas:scanMangaDirectory": {
+        func: scanMangaDirectory,
         type: "handle"
     },
     "window:minimize": {

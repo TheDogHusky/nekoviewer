@@ -3,6 +3,7 @@ import path from "node:path";
 import type { IpcMainInvokeEvent } from "electron";
 import { extractNumberFromFilename } from "#electron/utils/functions";
 import type { MangaData, MangaDataIPCAnswer } from "#types/manga";
+import App from "#electron/structures/app";
 
 export async function getMangaData(event: IpcMainInvokeEvent, manga: string): Promise<MangaDataIPCAnswer> {
     const files = await readdir(path.join(__dirname, "..", 'public', manga)).catch(() => []);
@@ -44,4 +45,8 @@ export async function getRecentMangas(): Promise<MangaData[]> {
     }
 
     return data;
+}
+
+export async function scanMangaDirectory(this: App, event: IpcMainInvokeEvent, directory: string): Promise<void> {
+    await this.scanner.scan(directory);
 }

@@ -1,115 +1,181 @@
-import type App from "#electron/structures/app";
-import { readdir, copyFile } from "node:fs/promises";
-import {
-    EXTENSIONS,
-    MANGA_VOLUME_FILE_NAME_REGEX,
-    MANGA_VOLUME_FILE_NAME_WITH_MANGA_NAME_REGEX,
-    DIRECTORY_MANGA_NAME_REGEX, IMAGE_EXTENSIONS
-} from "#electron/utils/constants";
-import { normalizeMangaName } from "#electron/utils/functions";
+import { utilityProcess } from "electron";
+import path from "node:path";
+import type App from "./app";
+import { createInterface } from "readline";
 
-class MangaScanner {
+/**
+ * Represents an ongoing scan task, which is used to manage the queue of scan tasks and ensure that only one scan is running at a time.
+ */
+interface ScanTask {
+    id: string;
+    directory: string;
+    resolve: () => void;
+    reject: (err: Error) => void;
+}
+
+export default class MangaScanner {
     private app: App;
+    private child: Electron.UtilityProcess | null = null;
+    private isScanning = false;
+    private queue: ScanTask[] = [];
 
     constructor(app: App) {
         this.app = app;
     }
 
-    async scan(directory: string, onProgress: (percent: number) => void): Promise<void> {
-        const files = await readdir(directory, { withFileTypes: true });
+    /**
+     * Initialize the scanner worker process. This is done lazily when the first scan task is added to the queue, and the worker process is killed when the queue is empty.
+     * @private
+     */
+    private initWorker() {
+        if (this.child) return;
+        this.child = utilityProcess.fork(
+            path.join(
+                process.env.APP_ROOT!,
+                "dist-electron",
+                "scanner.worker.js",
+            ),
+            [],
+            { stdio: "pipe", serviceName: "MangaScanner" },
+        );
 
-        let mangaName = this.findMangaName(directory + "/" + files[0]?.name);
-        if (mangaName) {
-            console.log(`(scanner) Found manga: ${mangaName}`);
+        if (this.child.stdout) {
+            const reader = createInterface({ input: this.child.stdout });
+
+            reader.on("line", (line) => {
+                console.debug(`(scanner worker) ${line}`);
+            });
         }
 
-        for await (const file of files) {
-            // if we haven't found the manga name yet, we will try to find it from the current file or directory
-            if (!mangaName) {
-                mangaName = this.findMangaName(directory + "/" + file.name);
-                if (mangaName) {
-                    console.log(`(scanner) Found manga: ${mangaName}`);
-                }
-            }
+        if (this.child.stderr) {
+            const reader = createInterface({ input: this.child.stderr });
 
-            // if the file is a directory, we will scan it recursively
-            if (file.isDirectory()) {
-                const subDir = `${directory}/${file.name}`;
-                await this.scan(subDir, onProgress);
-            }
-
-            // if the file is indeed a volume file (matches our supported extensions), we process it
-            const path = `${directory}/${file.name}`;
-            const ext = path.split(".").pop()?.toLowerCase();
-            if (!ext) continue;
-
-            if (ext in EXTENSIONS) {
-
-            } else if (ext in IMAGE_EXTENSIONS) {
-                // if it's an image file, this means we found the cover image, saving it!
-                await this.processCoverImage(path, mangaName);
-            }
-
+            reader.on("line", (line) => {
+                console.error(`(scanner worker error) ${line}`);
+            });
         }
+
+        this.child.on("spawn", () => {
+            console.debug(
+                "(scanner) Worker process spawned successfully (PID:",
+                this.child?.pid,
+                ")",
+            );
+        });
+
+        this.child.on("message", (msg) => {
+            const { type, payload } = msg;
+
+            switch (type) {
+                case "PROGRESS":
+                    console.debug(`(scanner worker) Progress: ${payload.percent}%`);
+                    this.app.window?.webContents.send("mangas:scanProgress", payload);
+                    break;
+                case "DONE":
+                    this.finishTask(payload.id);
+                    break;
+                case "ERROR":
+                    console.error(`Task ${payload.id} failed:`, payload.error);
+                    this.finishTask(payload.id, new Error(payload.error));
+                    break;
+            }
+        });
     }
 
     /**
-     * Find the manga name from the file path. It will try to find the manga name from the file name first, if it doesn't find it, it will try to find it from the directory name. If it still doesn't find it, it will return an empty string.
-     * @param filePath The file path to find the manga name from.
-     * @return The manga name if found, otherwise an empty string.
+     * Will add a scan to the scanner queue
+     * @param directory The directory to scan
+     * @return A promise that resolves with the ID of the scan task, which can be used to track its progress and completion
      */
-    findMangaName(filePath: string): string {
-        const parts = filePath.split("/");
-        // if the file path only contains the directory, try to find the manga name from the directory name
-        if (parts.length === 1) {
-            const dirName = parts[0];
-            // we should verify if the directory name contains the manga name by checking if it matches the regex with manga name, if it doesn't match, we will return an empty string
-            const match = dirName?.match(DIRECTORY_MANGA_NAME_REGEX);
-            if (!match) {
-                return "";
-            }
+    public scan(directory: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const id = crypto.randomUUID();
 
-            return normalizeMangaName(dirName);
-        }
-        const fileName = parts.pop() || "";
-        const dirName = parts.pop() || "";
+            this.queue.push({
+                id,
+                directory,
+                resolve: () => {},
+                reject,
+            });
 
-        const matchWithMangaName = fileName.match(MANGA_VOLUME_FILE_NAME_WITH_MANGA_NAME_REGEX);
-        // if the file name matches the regex with manga name, it means the volumes contains the manga name
-        if (matchWithMangaName) {
-            return normalizeMangaName(matchWithMangaName[1]);
-        }
+            console.log(`(scanner) Queued task ${id} for ${directory}`);
+            console.log(`(scanner) Queue length: ${this.queue.length}`);
+            console.log(`(scanner) Is scanning: ${this.isScanning}`);
+            console.log(`(scanner) Worker PID: ${this.child?.pid}`);
 
-        const matchWithoutMangaName = fileName.match(MANGA_VOLUME_FILE_NAME_REGEX);
-        // if the file name matches the regex without manga name, it means the volumes doesn't contain the manga name, so we will try to find the manga name from the directory name
-        if (matchWithoutMangaName) {
-            return normalizeMangaName(dirName);
-        }
+            // we start processing
+            this.processNext();
 
-        // if the file name doesn't match any of the regex, it means it's not a valid manga volume file, so we will return an empty string
-        return "";
+            // resolve immediately with ID so frontend can track it
+            resolve(id);
+        });
     }
 
-    async processVolumeFile(filePath: string): Promise<void> {}
-
-    async processCoverImage(filePath: string, mangaName?: string): Promise<void> {
-        if (!mangaName) {
-            mangaName = this.findMangaName(filePath);
-            if (!mangaName) {
-                console.warn(`(scanner) Could not find manga name while processing cover image. Skipping cover image: ${filePath}`);
-                return;
+    /**
+     * Process the next scan task in the queue if there is one and if we're not already scanning
+     * @private
+     */
+    private processNext() {
+        if (this.isScanning || this.queue.length === 0) {
+            if (this.queue.length === 0) {
+                console.log("(scanner) No more tasks in queue, killing worker");
+                this.killWorker();
             }
-        }
-        const mangaDirectory = this.app.userDataFolder + "/mangas" + "/" + mangaName;
-        // we will save the cover image in the manga directory with the name "cover" and the same extension as the original file
-        const ext = filePath.split(".").pop()?.toLowerCase();
-        if (!ext) {
-            console.warn(`(scanner) Could not find file extension while processing cover image. Skipping cover image: ${filePath}`);
             return;
         }
-        const coverPath = `${mangaDirectory}/cover.${ext}`;
-        // we will copy the cover image to the manga directory
-        await copyFile(filePath, coverPath);
-        console.log(`(scanner) Cover image saved: ${coverPath}`);
+
+        const task = this.queue[0];
+        if (!task) return;
+
+        this.initWorker(); // in case the worker was killed after finishing the previous task, be cautious
+        this.isScanning = true;
+
+        console.log(`(scanner) Starting task ${task.id}`);
+
+        this.child?.postMessage({
+            type: "START",
+            payload: {
+                id: task.id,
+                directory: task.directory,
+                userDataFolder: this.app.userDataFolder,
+            },
+        });
+    }
+
+    /**
+     * Finish a scan task by its ID, removing it from the queue and resolving or rejecting its promise accordingly. This is called when the worker process sends a "DONE" or "ERROR" message.
+     * @param id The ID of the scan task to finish
+     * @param error An optional error if the task failed, which will be sent to the frontend and used to reject the task's promise
+     * @private
+     */
+    private finishTask(id: string, error?: Error) {
+        // we find and remove the task
+        const taskIndex = this.queue.findIndex((t) => t.id === id);
+        if (taskIndex !== -1) {
+            const [task] = this.queue.splice(taskIndex, 1);
+            if (!task) {
+                console.error(`(scanner) Task ${id} not found in queue`);
+                return;
+            }
+            if (error) task?.reject(error);
+            else task?.resolve();
+        }
+
+        // notify frontend
+        this.app.window?.webContents.send("mangas:scanComplete", {
+            id,
+            error: error?.message,
+        });
+
+        // reset flag and process next item
+        this.isScanning = false;
+        this.processNext();
+    }
+
+    private killWorker() {
+        if (this.child) {
+            this.child.kill();
+            this.child = null;
+        }
     }
 }
