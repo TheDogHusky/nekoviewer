@@ -30,12 +30,20 @@ export function normalizeMangaName(name: string | undefined): string {
 }
 
 /**
+ * Split a file path into its components. It will split the file path by either "/" or "\" depending on the platform.
+ * @param filePath The file path to split.
+ */
+export function splitPath(filePath: string): string[] {
+    return process.platform === "win32" ? filePath.split("\\") : filePath.split("/");
+}
+
+/**
  * Find the manga name from the file path. It will try to find the manga name from the file name first, if it doesn't find it, it will try to find it from the directory name. If it still doesn't find it, it will return an empty string.
  * @param filePath The file path to find the manga name from.
  * @return The manga name if found, otherwise an empty string.
  */
 export function findMangaName(filePath: string): string {
-    const parts = filePath.split("/");
+    const parts = splitPath(filePath)
     // if the file path only contains the directory, try to find the manga name from the directory name
     if (parts.length === 1) {
         const dirName = parts[0];

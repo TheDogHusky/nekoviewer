@@ -5,11 +5,13 @@ import {
 } from "#electron/utils/constants";
 import { exists, findMangaName } from "#electron/utils/functions";
 import type { Dirent } from "node:fs";
+import { join } from "node:path";
+import type { MangaVolume, ScanData } from "#types/manga";
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 interface FileData {
-    file: Dirent<string>;
+    file: Dirent;
     path: string;
 }
 
@@ -32,14 +34,13 @@ export default class ScannerCore {
      * @param directory
      */
     async findAllFiles(directory: string): Promise<FileData[]> {
-        console.log(`Starting scan of directory: ${directory}`);
         await this.initializeDataDirectory();
 
         const fsFiles = await readdir(directory, { withFileTypes: true });
         let files: FileData[] = [];
 
         for await (const file of fsFiles) {
-            const path = `${directory}/${file.name}`;
+            const path = join(directory, file.name);
             if (file.isDirectory()) {
                 const subDirFiles = await this.findAllFiles(path);
                 files = files.concat(subDirFiles);
@@ -51,14 +52,14 @@ export default class ScannerCore {
         return files;
     }
 
-    async scan(directory: string, onProgress: (data: ScanProgressData) => void): Promise<void> {
+    async scan(directory: string, onProgress: (data: ScanProgressData) => void): Promise<ScanData> {
         console.log(`Starting scan of directory: ${directory}`);
         await this.initializeDataDirectory();
 
         const files = await this.findAllFiles(directory);
         const totalFiles = files.length;
 
-        let mangaName = findMangaName(directory + "/" + files[0]?.file.name);
+        let mangaName = findMangaName(join(directory, files[0]?.file.name || ""));
         if (mangaName) {
             console.log(`Found manga: ${mangaName}`);
         }
@@ -69,7 +70,7 @@ export default class ScannerCore {
             console.log(`Processing file: ${file.file.name}`);
             // if we haven't found the manga name yet, we will try to find it from the current file or directory
             if (!mangaName) {
-                mangaName = findMangaName(directory + "/" + file.file.name);
+                mangaName = findMangaName(join(directory, file.file.name));
                 if (mangaName) {
                     console.log(`Found manga: ${mangaName}`);
                 }
@@ -116,6 +117,10 @@ export default class ScannerCore {
         // we will just log the processed files for now, we will implement the actual processing later
         console.log(`Processed files: ${processedFiles.length}`);
         console.dir(processedFiles);
+        return {
+            mangaName,
+            volumes: processedFiles
+        }
     }
 
     async processVolumeFile(filePath: string, mangaName?: string): Promise<MangaVolume & { filePath: string } | undefined> {
@@ -144,14 +149,14 @@ export default class ScannerCore {
             return;
         }
 
-        const mangaDirectory = this.appDataPath + "/mangas" + "/" + mangaName;
+        const mangaDirectory = join(this.appDataPath, "mangas", mangaName);
         // we will save the cover image in the manga directory with the name "cover" and the same extension as the original file
         const ext = filePath.split(".").pop()?.toLowerCase();
         if (!ext) {
             console.warn(`Could not find file extension while processing cover image. Skipping cover image: ${filePath}`);
             return;
         }
-        const coverPath = `${mangaDirectory}/cover.${ext}`;
+        const coverPath = join(mangaDirectory, "cover." + ext)
         // we will copy the cover image to the manga directory
         await this.initializeDataDirectory(mangaName);
         await copyFile(filePath, coverPath);
@@ -160,7 +165,7 @@ export default class ScannerCore {
 
     async initializeDataDirectory(manga?: string): Promise<void> {
         // we will create the mangas directory in the app data directory if it doesn't exist
-        const mangasDirectory = this.appDataPath + "/mangas";
+        const mangasDirectory = join(this.appDataPath, "mangas");
 
         if (!await exists(mangasDirectory)) {
             await mkdir(mangasDirectory, { recursive: true });
@@ -169,7 +174,7 @@ export default class ScannerCore {
 
         if (manga) {
             // we will also create the manga directory if it doesn't exist
-            const mangaDirectory = mangasDirectory + "/" + manga;
+            const mangaDirectory = join(mangasDirectory, manga);
             if (!await exists(mangaDirectory)) {
                 await mkdir(mangaDirectory, { recursive: true });
                 console.debug(`Manga directory created: ${mangaDirectory}`);

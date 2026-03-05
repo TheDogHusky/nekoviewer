@@ -29,7 +29,7 @@ window.ipcRenderer.on("mangas:scanProgress", (e, data) => {
 });
 window.ipcRenderer.on("mangas:scanComplete", (e, data) => {
     console.log("Scan finished");
-    console.log("Manga ID:", data.id);
+    console.log("Manga data:", data);
 });
 </script>
 

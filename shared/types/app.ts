@@ -1,9 +1,13 @@
 import App from '#electron/structures/app';
 import type { IpcMainEvent, IpcMainInvokeEvent } from 'electron';
 
-export interface EventHandler {
-    type: 'handle' | 'on' | 'once';
-    func: (this: App, event: IpcMainEvent | IpcMainInvokeEvent, data: any) => any;
+export interface IPCEventHandler {
+    type: "handle" | "on" | "once";
+    func: (
+        this: App,
+        event: IpcMainEvent | IpcMainInvokeEvent,
+        data: any,
+    ) => any;
 }
 
 export type AppStartupInfos = {

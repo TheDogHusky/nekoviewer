@@ -12,7 +12,7 @@ parentPort.on("message", async (e) => {
         try {
             const core = new ScannerCore(payload.userDataFolder);
 
-            await core.scan(directory, (data) => {
+            const data = await core.scan(directory, (data) => {
                 // echo the ID back with progress
                 parentPort.postMessage({
                     type: "PROGRESS",
@@ -22,7 +22,7 @@ parentPort.on("message", async (e) => {
 
             parentPort.postMessage({
                 type: "DONE",
-                payload: { id },
+                payload: { id, ...data },
             });
         } catch (error: any) {
             parentPort.postMessage({

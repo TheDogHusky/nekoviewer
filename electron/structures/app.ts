@@ -8,7 +8,7 @@ import type { AppSettings } from "#types/app";
 import { settingsTable } from "#electron/structures/database/schemas";
 import { DEFAULT_SETTINGS_VALUES } from "#electron/utils/constants";
 import { initializeLogging } from "#electron/utils/logger";
-import type { EventHandler } from "#types/app";
+import type { IPCEventHandler } from "#types/app";
 import * as Splashscreen from "@trodi/electron-splashscreen";
 import MangaScanner from "#electron/structures/scanner";
 
@@ -26,7 +26,6 @@ process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL
  */
 export default class App {
     public window: BrowserWindow | null = null;
-    public splashWindow: BrowserWindow | null = null;
     public app: typeof app = app;
     public userDataFolder: string = app.getPath("userData");
     public db: Database = new Database(this);
@@ -166,7 +165,7 @@ export default class App {
      */
     initIpc() {
         Object.entries(events).forEach(([key, value]) => {
-            const eventHandler = value as EventHandler;
+            const eventHandler = value as IPCEventHandler;
             switch (eventHandler.type) {
                 case 'handle':
                     ipcMain.handle(key, (event, ...args) =>

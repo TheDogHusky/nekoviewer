@@ -30,6 +30,11 @@ export interface MangaData {
     volumes: MangaVolume[];
 }
 
+export interface ScanData {
+    mangaName: string;
+    volumes: (MangaVolume & { filePath: string })[];
+}
+
 /**
  * The data structure for a manga volume
  */
