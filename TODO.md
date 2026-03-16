@@ -28,10 +28,10 @@ Things to do to make this app better, so I don't forget anything.
 - [ ] Add a settings composable (useSettings) to store and retrieve settings from the database
 - [x] Figure out if the logic should be handed down to electron (such as getting settings, mangas, library, importing, etc..) or if it should be handled in nuxt
 - [ ] ~~Add a database composable (useDatabase) to handle the database~~ -> use event handler
-- [ ] Add a "mangas" collection in the database
-- [ ] Add a "settings" collection in the database
-- [ ] Add a "library" collection in the database
-- [ ] Add a "recents" collection in the database
+- [x] Add a "mangas" collection in the database
+- [x] Add a "settings" collection in the database
+- [x] Add a "library" collection in the database
+- [x] Add a "recents" collection in the database
 - [x] Add database logic in ~/electron/structures/database/index.ts
 - [x] Use Drizzle for the database
 - [ ] DB: store mangas in userData/mangas -> /mangas/:id, volumes at /manga/:id/volumes/:volume, pages at /manga/:id/volumes/:volume where volume should be number.pdf 
